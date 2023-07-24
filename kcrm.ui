@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>KCRM</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>res/favicon.ico</normaloff>res/favicon.ico</iconset>
+  </property>
   <property name="iconSize">
    <size>
     <width>24</width>
@@ -116,12 +120,21 @@ color : black
    <property name="movable">
     <bool>false</bool>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNewFile"/>
+   <addaction name="actionOpenFile"/>
+   <addaction name="actionSaveFile"/>
   </widget>
   <widget class="QToolBar" name="toolBar_2">
    <property name="windowTitle">
@@ -129,6 +142,12 @@ color : black
    </property>
    <property name="movable">
     <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -144,6 +163,12 @@ color : black
    <property name="movable">
     <bool>false</bool>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -151,6 +176,33 @@ color : black
     <bool>true</bool>
    </attribute>
   </widget>
+  <action name="actionNewFile">
+   <property name="icon">
+    <iconset>
+     <normaloff>res/newfile.png</normaloff>res/newfile.png</iconset>
+   </property>
+   <property name="text">
+    <string>NewFile</string>
+   </property>
+  </action>
+  <action name="actionOpenFile">
+   <property name="icon">
+    <iconset>
+     <normaloff>res/open.png</normaloff>res/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>OpenFile</string>
+   </property>
+  </action>
+  <action name="actionSaveFile">
+   <property name="icon">
+    <iconset>
+     <normaloff>res/save.png</normaloff>res/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>SaveFile</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

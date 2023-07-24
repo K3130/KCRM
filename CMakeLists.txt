@@ -57,3 +57,11 @@ set_target_properties(KCRM PROPERTIES
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(KCRM)
 endif()
+
+add_custom_command(
+  TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+   ${CMAKE_CURRENT_SOURCE_DIR}/res/
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>/res)
+
+
