@@ -15,10 +15,13 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
-        main.cpp
-        kcrm.cpp
-        kcrm.h
-        kcrm.ui
+        src/main.cpp
+        src/kcrm.cpp
+        src/kcrm.h
+        src/kcrm.ui
+        src/textwidget.h
+        src/textwidget.cpp
+        resource.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

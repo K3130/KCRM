@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/res">
+        <file>res/favicon.ico</file>
+        <file>res/newfile.png</file>
+        <file>res/open.png</file>
+        <file>res/save.png</file>
+    </qresource>
+</RCC>

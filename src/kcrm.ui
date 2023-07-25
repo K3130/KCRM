@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1031</width>
-    <height>684</height>
+    <height>641</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,23 +41,26 @@
      <number>0</number>
     </property>
     <item>
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>1000</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
        <number>0</number>
       </property>
+      <item>
+       <layout class="QGridLayout" name="gridLayout"/>
+      </item>
+      <item>
+       <widget class="QMdiArea" name="mdiArea">
+        <property name="documentMode">
+         <bool>true</bool>
+        </property>
+        <property name="tabsClosable">
+         <bool>true</bool>
+        </property>
+        <property name="tabsMovable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QLabel" name="label">
         <property name="styleSheet">
@@ -78,9 +81,6 @@ color : black
           <width>1029</width>
           <height>152</height>
          </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
         </property>
         <property name="readOnly">
          <bool>true</bool>
@@ -178,8 +178,8 @@ color : black
   </widget>
   <action name="actionNewFile">
    <property name="icon">
-    <iconset>
-     <normaloff>res/newfile.png</normaloff>res/newfile.png</iconset>
+    <iconset resource="../resource.qrc">
+     <normaloff>:/res/res/newfile.png</normaloff>:/res/res/newfile.png</iconset>
    </property>
    <property name="text">
     <string>NewFile</string>
@@ -187,8 +187,8 @@ color : black
   </action>
   <action name="actionOpenFile">
    <property name="icon">
-    <iconset>
-     <normaloff>res/open.png</normaloff>res/open.png</iconset>
+    <iconset resource="../resource.qrc">
+     <normaloff>:/res/res/open.png</normaloff>:/res/res/open.png</iconset>
    </property>
    <property name="text">
     <string>OpenFile</string>
@@ -196,14 +196,16 @@ color : black
   </action>
   <action name="actionSaveFile">
    <property name="icon">
-    <iconset>
-     <normaloff>res/save.png</normaloff>res/save.png</iconset>
+    <iconset resource="../resource.qrc">
+     <normaloff>:/res/res/save.png</normaloff>:/res/res/save.png</iconset>
    </property>
    <property name="text">
     <string>SaveFile</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource.qrc"/>
+ </resources>
  <connections/>
 </ui>
