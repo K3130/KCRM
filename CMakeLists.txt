@@ -21,6 +21,9 @@ set(PROJECT_SOURCES
         src/kcrm.ui
         src/textwidget.h
         src/textwidget.cpp
+        src/widget_create_file.cpp
+        src/widget_create_file.h
+        src/widget_create_file.ui
         resource.qrc
 )
 

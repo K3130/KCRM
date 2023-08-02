@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include <QMdiSubWindow>
+#include "ui_widget_create_file.h"
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class KCRM; }
