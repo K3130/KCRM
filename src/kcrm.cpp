@@ -1,6 +1,4 @@
 #include "kcrm.h"
-#include "./ui_kcrm.h"
-#include "widget_create_file.h"
 
 KCRM::KCRM(QWidget *parent)
     : QMainWindow(parent)

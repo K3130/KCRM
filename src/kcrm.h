@@ -5,6 +5,8 @@
 #include <QMdiSubWindow>
 #include <QVector>
 #include "ui_widget_create_file.h"
+#include "widget_create_file.h"
+#include "./ui_kcrm.h"
 
 enum class window_flags
 {
