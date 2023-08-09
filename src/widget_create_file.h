@@ -15,8 +15,6 @@ public:
     explicit widget_create_file(QWidget *parent = nullptr);
     ~widget_create_file();
 
-private slots:
-    void on_pushButton_3_clicked();
 
 private:
     Ui::widget_create_file *ui;

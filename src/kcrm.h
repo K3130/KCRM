@@ -3,9 +3,22 @@
 
 #include <QMainWindow>
 #include <QMdiSubWindow>
+#include <QVector>
 #include "ui_widget_create_file.h"
 
+enum class window_flags
+{
+   CREATE_FILE,
+   TEXT_DOCUMENT,
+   TABLE_DOCUMENT
+};
 
+struct window_content
+{
+    window_flags flag;
+    QWidget* pWidget;
+    window_content(window_flags f, QWidget* w) : flag(f), pWidget(w){}
+};
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class KCRM; }
@@ -19,7 +32,7 @@ public:
     KCRM(QWidget *parent = nullptr);
     ~KCRM();
 
-private slots:
+public slots:
     void on_actionNewFile_triggered();
 
     void on_actionOpenFile_triggered();
@@ -30,5 +43,7 @@ private slots:
 
 private:
     Ui::KCRM *ui;
+    Ui::widget_create_file m_wcf;
+    QVector<window_content> m_widgets;
 };
 #endif // KCRM_H

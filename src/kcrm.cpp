@@ -7,14 +7,9 @@ KCRM::KCRM(QWidget *parent)
     , ui(new Ui::KCRM)
 {
     ui->setupUi(this);
-    //ui->mdiArea->setMinimumHeight(500);
-    //ui->mdiArea->setMaximumHeight(1000);
-
-
     ui->plainTextEdit->setMaximumHeight(100);
     ui->plainTextEdit->setMinimumHeight(100);
     ui->label->setMaximumHeight(12);
-
 
 
 }
@@ -27,57 +22,49 @@ KCRM::~KCRM()
 
 void KCRM::on_actionNewFile_triggered()
 {
-    QWidget* createnewfile = new QWidget();
-    Ui::widget_create_file* test = new Ui::widget_create_file();
-    test->setupUi(createnewfile);
+    bool flag = false;
+    for (size_t i = 0; i < m_widgets.size(); i++)
+    {
+        if (m_widgets[i].flag == window_flags::CREATE_FILE)
+            flag = true;
+    }
+    if (flag)
+    {
+        return;
+    }
+    else
+    {
+        QWidget* createnewfile = new QWidget();
+
+        m_widgets.push_back(window_content(window_flags::CREATE_FILE, createnewfile));
+        m_wcf.setupUi(createnewfile);
+        QMdiSubWindow* subWindow = ui->mdiArea->addSubWindow(createnewfile, Qt::FramelessWindowHint |
+                                                             Qt::CustomizeWindowHint);
+        subWindow->setAttribute(Qt::WA_DeleteOnClose);
+
+        connect(m_wcf.pushButton, &QPushButton::clicked, this, [&m_widgets = m_widgets, subWindow]() mutable
+        {
+            subWindow->close();
+            for (size_t i = 0; i < m_widgets.size(); i++)
+            {
+                if (m_widgets[i].flag == window_flags::CREATE_FILE)
+                {
+                    m_widgets.remove(i);
+                }
+            }
 
 
-    QMdiSubWindow* subWindow = ui->mdiArea->addSubWindow(createnewfile, Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
+        });
 
-
-//    ui->mdiArea->setStyleSheet("QWidget::title {"
-//                                        "background-color: #007cad;"
-//                                        "border: 4px;"
-
-//                               "}"
-
-//                               "QWidget {"
-//                                    "min-height: 300px;"
-//                                    "min-width: 290px;"
-//                                    "background-color: white;"
-//                                    "border: none;"
-//                                "}"
-
-//                               "QWidget::close-button {"
-//                                    "border: 5px;"
-
-//                                    "background-color: #0095b6;"
-//                                    "color: white;"
-//                                    "padding: 4px;"
-//                                    "font-size: 12px;"
-//                                    "width: 5px;"
-//                                    "height: 5px;"
-//                               "}"
-
-
-//                               );
-
-
-
-
-
-    int x = (ui->mdiArea->rect().width() - 290) / 2;
-    int y = (ui->mdiArea->rect().height() - 300) / 2;
-    subWindow->move(x,y);
-
+        int x = (ui->mdiArea->rect().width() - 200) / 2;
+        int y = (ui->mdiArea->rect().height() - 300) / 2;
+        subWindow->move(x,y);
+        subWindow->setFixedSize(200, 300);
+        subWindow->show();
+    }
 
 
 
-
-    //createnewfile.setWindowTitle("Выбор нового документа");
-
-    subWindow->show();
-    //createnewfile.show();
 }
 
 
@@ -97,4 +84,6 @@ void KCRM::on_mdiArea_subWindowActivated(QMdiSubWindow *arg1)
 {
 
 }
+
+
 
