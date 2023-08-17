@@ -16,8 +16,5 @@ widget_create_file::~widget_create_file()
 
 
 
-void widget_create_file::on_pushButton_2_clicked()
-{
 
-}
 

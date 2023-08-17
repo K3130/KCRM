@@ -9,12 +9,45 @@ KCRM::KCRM(QWidget *parent)
     ui->plainTextEdit->setMinimumHeight(100);
     ui->label->setMaximumHeight(12);
 
+    ui->mdiArea->viewport()->setMouseTracking(true);
+
+    //m_pressed = false;
+
 
 }
 
 KCRM::~KCRM()
 {
     delete ui;
+}
+
+
+
+void KCRM::create_text_document()
+{
+    for (size_t i = 0; i < m_widgets.size(); i++)
+    {
+        if (m_widgets[i].flag == window_flags::CREATE_FILE)
+        {
+            m_widgets[i].pWidget->close();
+            m_widgets.remove(i);
+        }
+    }
+
+
+    QWidget* text_document = new widget_text_document();
+    QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(text_document, Qt::FramelessWindowHint);
+    m_widgets.push_back(window_content(window_flags::TEXT_DOCUMENT, sub_window));
+    sub_window->setAttribute(Qt::WA_DeleteOnClose);
+
+
+
+    int x = (ui->mdiArea->rect().width() - 500) / 2;
+    int y = (ui->mdiArea->rect().height() - 400) / 2;
+    sub_window->move(x,y);
+    //sub_window->setFixedSize(200, 300);
+    sub_window->show();
+
 }
 
 
@@ -33,16 +66,16 @@ void KCRM::on_actionNewFile_triggered()
     else
     {
         QWidget* createnewfile = new QWidget();
-
-        m_widgets.push_back(window_content(window_flags::CREATE_FILE, createnewfile));
         m_wcf.setupUi(createnewfile);
-        QMdiSubWindow* subWindow = ui->mdiArea->addSubWindow(createnewfile, Qt::FramelessWindowHint |
+        QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(createnewfile, Qt::FramelessWindowHint |
                                                              Qt::CustomizeWindowHint);
-        subWindow->setAttribute(Qt::WA_DeleteOnClose);
+        m_widgets.push_back(window_content(window_flags::CREATE_FILE, sub_window));
+        sub_window->setAttribute(Qt::WA_DeleteOnClose);
 
-        connect(m_wcf.pushButton, &QPushButton::clicked, this, [&m_widgets = m_widgets, subWindow]() mutable
+        connect(m_wcf.pushButton_2, &QPushButton::clicked, this, &KCRM::create_text_document);
+        connect(m_wcf.pushButton, &QPushButton::clicked, this, [&m_widgets = m_widgets, sub_window]() mutable
         {
-            subWindow->close();
+            sub_window->close();
             for (size_t i = 0; i < m_widgets.size(); i++)
             {
                 if (m_widgets[i].flag == window_flags::CREATE_FILE)
@@ -56,9 +89,9 @@ void KCRM::on_actionNewFile_triggered()
 
         int x = (ui->mdiArea->rect().width() - 200) / 2;
         int y = (ui->mdiArea->rect().height() - 300) / 2;
-        subWindow->move(x,y);
-        subWindow->setFixedSize(200, 300);
-        subWindow->show();
+        sub_window->move(x,y);
+        sub_window->setFixedSize(200, 300);
+        sub_window->show();
     }
 
 

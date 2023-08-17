@@ -63,6 +63,12 @@
          <height>0</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color: #007cad;</string>
        </property>
@@ -79,7 +85,7 @@
        <property name="maximumSize">
         <size>
          <width>13</width>
-         <height>13</height>
+         <height>15</height>
         </size>
        </property>
        <property name="baseSize">
@@ -87,6 +93,12 @@
          <width>5</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <bold>true</bold>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: #eb4c3b;</string>

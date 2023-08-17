@@ -4,8 +4,11 @@
 #include <QMainWindow>
 #include <QMdiSubWindow>
 #include <QVector>
+#include <QDebug>
 #include "ui_widget_create_file.h"
 #include "widget_create_file.h"
+#include "widget_text_document.h"
+#include "ui_widget_text_document.h"
 #include "./ui_kcrm.h"
 
 enum class window_flags
@@ -18,8 +21,8 @@ enum class window_flags
 struct window_content
 {
     window_flags flag;
-    QWidget* pWidget;
-    window_content(window_flags f, QWidget* w) : flag(f), pWidget(w){}
+    QMdiSubWindow* pWidget;
+    window_content(window_flags f, QMdiSubWindow* w) : flag(f), pWidget(w){}
 };
 
 QT_BEGIN_NAMESPACE
@@ -34,6 +37,10 @@ public:
     KCRM(QWidget *parent = nullptr);
     ~KCRM();
 
+
+private slots:
+    void create_text_document();
+
 public slots:
     void on_actionNewFile_triggered();
 
@@ -46,6 +53,8 @@ public slots:
 private:
     Ui::KCRM *ui;
     Ui::widget_create_file m_wcf;
+    Ui::widget_text_document m_wtd;
     QVector<window_content> m_widgets;
+
 };
 #endif // KCRM_H
