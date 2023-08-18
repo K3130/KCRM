@@ -26,7 +26,7 @@ void widget_text_document::mouseMoveEvent(QMouseEvent *event)
         QPoint delta = event->pos() - m_current;
         QPoint newpos = this->parentWidget()->pos() + delta;
         QRect parentGeometry = this->parentWidget()->parentWidget()->geometry();
-        qDebug() << "geometry: " << parentGeometry;
+
 
         if (newpos.x() >= parentGeometry.left() && newpos.y() >= parentGeometry.top()
                 && newpos.x() + width() <= parentGeometry.right() && newpos.y() + height() <= parentGeometry.bottom()) {
@@ -36,8 +36,43 @@ void widget_text_document::mouseMoveEvent(QMouseEvent *event)
 
 }
 
+QString widget_text_document::getLableName()
+{
+    return ui->label->text();
+}
+
+void widget_text_document::setLableName(const QString &aLable)
+{
+    ui->label->setText(aLable);
+}
 
 
 
+void widget_text_document::on_pushButton_clicked()
+{
+    this->parentWidget()->close();
+}
 
+
+void widget_text_document::on_pushButton_3_clicked()
+{
+    QSize size = this->parentWidget()->minimumSizeHint();
+    if(this->parentWidget()->isMaximized())
+    {
+        this->parentWidget()->resize(size);
+        this->parentWidget()->showNormal();
+    }
+    else
+    {
+        this->parentWidget()->showMaximized();
+    }
+
+}
+
+
+void widget_text_document::on_pushButton_2_clicked()
+{
+    this->parentWidget()->showMinimized();
+    emit signal_window_minimized();
+}
 

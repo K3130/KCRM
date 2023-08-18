@@ -25,6 +25,9 @@ set(PROJECT_SOURCES
         src/widget_text_document.cpp
         src/widget_text_document.h
         src/widget_text_document.ui
+        src/widget_minimization_widget.cpp
+        src/widget_minimization_widget.h
+        src/widget_minimization_widget.ui
         resource.qrc
 )
 

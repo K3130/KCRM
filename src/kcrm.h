@@ -40,6 +40,7 @@ public:
 
 private slots:
     void create_text_document();
+    void window_minimized();
 
 public slots:
     void on_actionNewFile_triggered();
@@ -52,8 +53,6 @@ public slots:
 
 private:
     Ui::KCRM *ui;
-    Ui::widget_create_file m_wcf;
-    Ui::widget_text_document m_wtd;
     QVector<window_content> m_widgets;
 
 };

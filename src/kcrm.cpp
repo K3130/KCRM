@@ -11,8 +11,6 @@ KCRM::KCRM(QWidget *parent)
 
     ui->mdiArea->viewport()->setMouseTracking(true);
 
-    //m_pressed = false;
-
 
 }
 
@@ -20,7 +18,6 @@ KCRM::~KCRM()
 {
     delete ui;
 }
-
 
 
 void KCRM::create_text_document()
@@ -35,18 +32,34 @@ void KCRM::create_text_document()
     }
 
 
-    QWidget* text_document = new widget_text_document();
+    QWidget* text_document = new widget_text_document(this);
     QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(text_document, Qt::FramelessWindowHint);
     m_widgets.push_back(window_content(window_flags::TEXT_DOCUMENT, sub_window));
     sub_window->setAttribute(Qt::WA_DeleteOnClose);
 
-
-
     int x = (ui->mdiArea->rect().width() - 500) / 2;
     int y = (ui->mdiArea->rect().height() - 400) / 2;
     sub_window->move(x,y);
-    //sub_window->setFixedSize(200, 300);
     sub_window->show();
+
+
+    connect(dynamic_cast<widget_text_document*>(text_document),
+            &widget_text_document::signal_window_minimized,
+            this,
+            &KCRM::window_minimized);
+
+}
+
+void KCRM::window_minimized()
+{
+    for (size_t i = 0; i < m_widgets.size(); i++)
+    {
+        if(m_widgets[i].pWidget->isMinimized())
+        {
+            ui->widget->createButton(m_widgets[i].pWidget->windowTitle(), m_widgets[i].pWidget);
+
+        }
+    }
 
 }
 
@@ -65,15 +78,24 @@ void KCRM::on_actionNewFile_triggered()
     }
     else
     {
-        QWidget* createnewfile = new QWidget();
+        Ui::widget_create_file m_wcf;
+        QWidget* createnewfile = new QWidget(this);
         m_wcf.setupUi(createnewfile);
+
         QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(createnewfile, Qt::FramelessWindowHint |
                                                              Qt::CustomizeWindowHint);
         m_widgets.push_back(window_content(window_flags::CREATE_FILE, sub_window));
         sub_window->setAttribute(Qt::WA_DeleteOnClose);
 
+        int x = (ui->mdiArea->rect().width() - 200) / 2;
+        int y = (ui->mdiArea->rect().height() - 300) / 2;
+        sub_window->move(x,y);
+        sub_window->setFixedSize(200, 300);
+        sub_window->show();
+
+
         connect(m_wcf.pushButton_2, &QPushButton::clicked, this, &KCRM::create_text_document);
-        connect(m_wcf.pushButton, &QPushButton::clicked, this, [&m_widgets = m_widgets, sub_window]() mutable
+        connect(m_wcf.pushButton, &QPushButton::clicked, this, [=]()
         {
             sub_window->close();
             for (size_t i = 0; i < m_widgets.size(); i++)
@@ -87,11 +109,7 @@ void KCRM::on_actionNewFile_triggered()
 
         });
 
-        int x = (ui->mdiArea->rect().width() - 200) / 2;
-        int y = (ui->mdiArea->rect().height() - 300) / 2;
-        sub_window->move(x,y);
-        sub_window->setFixedSize(200, 300);
-        sub_window->show();
+
     }
 
 

@@ -22,12 +22,25 @@ public:
 
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    QString getLableName();
+    void setLableName(const QString& aLable);
 
+
+private slots:
+    void on_pushButton_clicked();
+
+    void on_pushButton_3_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     QPoint m_current;
     bool m_pressed;
     Ui::widget_text_document *ui;
+
+signals:
+    void signal_window_minimized();
+
 };
 
 #endif // WIDGET_TEXT_DOCUMENT_H
