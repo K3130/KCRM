@@ -14,7 +14,3 @@ widget_create_file::~widget_create_file()
 }
 
 
-
-
-
-

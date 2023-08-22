@@ -8,10 +8,7 @@ KCRM::KCRM(QWidget *parent)
     ui->plainTextEdit->setMaximumHeight(100);
     ui->plainTextEdit->setMinimumHeight(100);
     ui->label->setMaximumHeight(12);
-
     ui->mdiArea->viewport()->setMouseTracking(true);
-
-
 }
 
 KCRM::~KCRM()
@@ -19,24 +16,24 @@ KCRM::~KCRM()
     delete ui;
 }
 
-
 void KCRM::create_text_document()
 {
     for (size_t i = 0; i < m_widgets.size(); i++)
     {
-        if (m_widgets[i].flag == window_flags::CREATE_FILE)
+        if (m_widgets[i].type == window_type::CREATE_FILE)
         {
             m_widgets[i].pWidget->close();
             m_widgets.remove(i);
         }
     }
 
-
     QWidget* text_document = new widget_text_document(this);
     QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(text_document, Qt::FramelessWindowHint);
-    m_widgets.push_back(window_content(window_flags::TEXT_DOCUMENT, sub_window));
+    qint32 id = QRandomGenerator::global()->bounded(0, 853323747);
+    QPushButton* button = new QPushButton();
+    button->setText(dynamic_cast<widget_text_document*>(text_document)->getLableName());
+    m_widgets.push_back(window_content(id ,window_type::TEXT_DOCUMENT, sub_window, button));
     sub_window->setAttribute(Qt::WA_DeleteOnClose);
-
     int x = (ui->mdiArea->rect().width() - 500) / 2;
     int y = (ui->mdiArea->rect().height() - 400) / 2;
     sub_window->move(x,y);
@@ -46,21 +43,42 @@ void KCRM::create_text_document()
     connect(dynamic_cast<widget_text_document*>(text_document),
             &widget_text_document::signal_window_minimized,
             this,
-            &KCRM::window_minimized);
+            [=](){
+                window_minimized(id);
+            });
+
+    connect(dynamic_cast<widget_text_document*>(text_document),
+            &widget_text_document::signal_window_close,
+            this,
+            [=](){
+               window_close(id);
+            });
 
 }
 
-void KCRM::window_minimized()
-{
+void KCRM::window_minimized(qint32 id)
+{    
     for (size_t i = 0; i < m_widgets.size(); i++)
     {
-        if(m_widgets[i].pWidget->isMinimized())
+        if(m_widgets[i].id == id)
         {
-            ui->widget->createButton(m_widgets[i].pWidget->windowTitle(), m_widgets[i].pWidget);
-
+            ui->widget->createButton(m_widgets[i].pButton, m_widgets[i].pWidget);
         }
     }
 
+}
+
+void KCRM::window_close(qint32 id)
+{
+    for (size_t i = 0; i < m_widgets.size(); i++)
+    {
+        if (m_widgets[i].id == id)
+        {
+            m_widgets[i].pWidget->close();
+            delete m_widgets[i].pButton;
+            m_widgets.remove(i);
+        }
+    }
 }
 
 
@@ -69,7 +87,7 @@ void KCRM::on_actionNewFile_triggered()
     bool flag = false;
     for (size_t i = 0; i < m_widgets.size(); i++)
     {
-        if (m_widgets[i].flag == window_flags::CREATE_FILE)
+        if (m_widgets[i].type == window_type::CREATE_FILE)
             flag = true;
     }
     if (flag)
@@ -84,7 +102,9 @@ void KCRM::on_actionNewFile_triggered()
 
         QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(createnewfile, Qt::FramelessWindowHint |
                                                              Qt::CustomizeWindowHint);
-        m_widgets.push_back(window_content(window_flags::CREATE_FILE, sub_window));
+        QRandomGenerator generator;
+        qint32 id = generator.generate() & std::numeric_limits<qint32>::max();
+        m_widgets.push_back(window_content(id, window_type::CREATE_FILE, sub_window, nullptr));
         sub_window->setAttribute(Qt::WA_DeleteOnClose);
 
         int x = (ui->mdiArea->rect().width() - 200) / 2;
@@ -100,13 +120,11 @@ void KCRM::on_actionNewFile_triggered()
             sub_window->close();
             for (size_t i = 0; i < m_widgets.size(); i++)
             {
-                if (m_widgets[i].flag == window_flags::CREATE_FILE)
+                if (m_widgets[i].type == window_type::CREATE_FILE)
                 {
                     m_widgets.remove(i);
                 }
             }
-
-
         });
 
 

@@ -40,6 +40,7 @@ private:
 
 signals:
     void signal_window_minimized();
+    void signal_window_close();
 
 };
 

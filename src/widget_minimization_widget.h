@@ -8,12 +8,7 @@
 #include <QDebug>
 #include <QStyleOption>
 #include <QPainter>
-
-struct button_object
-{
-    QPushButton* m_b;
-    QWidget* m_o;
-};
+#include "widget_text_document.h"
 
 namespace Ui {
 class widget_minimization_widget;
@@ -27,20 +22,13 @@ public:
     explicit widget_minimization_widget(QWidget *parent = nullptr);
     ~widget_minimization_widget();
 
-    void createButton(const QString& aName, QWidget* aWidget);
+    void createButton(QPushButton* aButton, QWidget* aWidget);
+    void delete_button(QPushButton* aButton);
+    void handleButtonClick(QWidget* aWidget);
 
 private:
-    Ui::widget_minimization_widget *ui;
-    QVector<button_object> m_buttons;
+    Ui::widget_minimization_widget *ui;    
 
-private slots:
-  void handleButtonClick(int buttonIndex);
-
-signals:
-  void signal_button_adds();
-
-public slots:
-  void draw_button();
 protected:
   void paintEvent(QPaintEvent *pe);
 };

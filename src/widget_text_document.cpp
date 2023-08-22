@@ -46,11 +46,9 @@ void widget_text_document::setLableName(const QString &aLable)
     ui->label->setText(aLable);
 }
 
-
-
 void widget_text_document::on_pushButton_clicked()
 {
-    this->parentWidget()->close();
+    emit signal_window_close();
 }
 
 

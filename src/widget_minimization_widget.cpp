@@ -6,16 +6,16 @@ widget_minimization_widget::widget_minimization_widget(QWidget *parent) :
     ui(new Ui::widget_minimization_widget)
 {
     ui->setupUi(this);
-
     ui->horizontalLayout->setMargin(0);
     ui->horizontalLayout->setSpacing(0);
-    ui->horizontalLayout->addStretch();
+    //ui->horizontalLayout->addStretch();
+    ui->horizontalLayout->setAlignment(Qt::AlignLeft);
 
 
-    QSpacerItem *item = new QSpacerItem(1,1, QSizePolicy::Expanding);
-    ui->horizontalLayout->addSpacerItem(item);
+    //QSpacerItem *item = new QSpacerItem(1,1, QSizePolicy::Expanding);
+    //ui->horizontalLayout->addSpacerItem(item);
 
-    connect(this, &widget_minimization_widget::signal_button_adds, this, &widget_minimization_widget::draw_button);
+
 
 }
 
@@ -24,51 +24,48 @@ widget_minimization_widget::~widget_minimization_widget()
     delete ui;
 }
 
-void widget_minimization_widget::createButton(const QString &aName, QWidget *aWidget)
+void widget_minimization_widget::createButton(QPushButton* aButton, QWidget* aWidget)
 {
-    bool ifExist = false;
-    for (int i = 0; i < m_buttons.size(); ++i)
+    if (aButton != nullptr && aWidget != nullptr)
     {
-        if(aWidget == m_buttons[i].m_o)
-            ifExist = true;
-    }
-    //#eb4c3b
-    if(!ifExist)
-    {
-        button_object b;
-        b.m_b = new QPushButton(aName, this);
+        for (int i = 0; i < ui->horizontalLayout->count(); ++i)
+        {
+            QWidget *widget = ui->horizontalLayout->itemAt(i)->widget();
+            if (widget == aButton)
+            {
+                return;
+            }
+        }
 
+        aButton->setStyleSheet("font-size: 10pt;"
+                               "font-weight: bold;"
+                               "color: #eb4c3b;"
+                               "min-width: 5em;");
 
-        b.m_b->setStyleSheet("font-size: 15pt;"
-                             "font-weight: bold;"
-                             "color: #eb4c3b;"
-                             "min-width: 5em;");
-
-
-        b.m_o = aWidget;
-        m_buttons.append(b);
-        emit signal_button_adds();
+        connect(aButton, &QPushButton::clicked, this, [=]{ handleButtonClick(aWidget); });
+        connect(aWidget, &QWidget::destroyed, this, [=]{ delete_button(aButton); });
+        ui->horizontalLayout->addWidget(aButton);
     }
 }
 
-void widget_minimization_widget::handleButtonClick(int buttonIndex)
+void widget_minimization_widget::delete_button(QPushButton* aButton)
 {
-    QSize size = m_buttons[buttonIndex].m_o->minimumSizeHint();
-    m_buttons[buttonIndex].m_o->resize(size);
-    m_buttons[buttonIndex].m_o->showNormal();
+    //ui->horizontalLayout->removeWidget(aButton);
+    ui->horizontalLayout->update();
+
 }
 
-void widget_minimization_widget::draw_button()
+void widget_minimization_widget::handleButtonClick(QWidget* aWidget)
 {
-    for (int i = 0; i < m_buttons.size(); ++i)
+    if (aWidget != nullptr)
     {
-        connect(m_buttons[i].m_b, &QPushButton::clicked, this, [=]{ handleButtonClick(i); });
-
-        ui->horizontalLayout->insertWidget(i, m_buttons[i].m_b);
-
-
+        QSize size = aWidget->minimumSizeHint();
+        aWidget->resize(size);
+        aWidget->showNormal();
     }
+
 }
+
 
 void widget_minimization_widget::paintEvent(QPaintEvent *pe)
 {

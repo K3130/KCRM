@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMdiSubWindow>
+#include <QRandomGenerator>
 #include <QVector>
 #include <QDebug>
 #include "ui_widget_create_file.h"
@@ -11,7 +12,7 @@
 #include "ui_widget_text_document.h"
 #include "./ui_kcrm.h"
 
-enum class window_flags
+enum class window_type
 {
    CREATE_FILE,
    TEXT_DOCUMENT,
@@ -20,9 +21,12 @@ enum class window_flags
 
 struct window_content
 {
-    window_flags flag;
+    qint32 id;
+    window_type type;
     QMdiSubWindow* pWidget;
-    window_content(window_flags f, QMdiSubWindow* w) : flag(f), pWidget(w){}
+    QPushButton* pButton;
+    window_content(int i, window_type t, QMdiSubWindow* w, QPushButton* b)
+        : id(i), type(t), pWidget(w), pButton(b){}
 };
 
 QT_BEGIN_NAMESPACE
@@ -37,12 +41,16 @@ public:
     KCRM(QWidget *parent = nullptr);
     ~KCRM();
 
+private:
 
-private slots:
-    void create_text_document();
-    void window_minimized();
+    void window_minimized(qint32 id);
+
+    void window_close(qint32 id);
 
 public slots:
+
+    void create_text_document();
+
     void on_actionNewFile_triggered();
 
     void on_actionOpenFile_triggered();
