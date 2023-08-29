@@ -141,8 +141,12 @@ color : black
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Файл</string>
     </property>
+    <addaction name="action"/>
+    <addaction name="action_2"/>
+    <addaction name="action_3"/>
+    <addaction name="action_4"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -240,6 +244,26 @@ color : black
    </property>
    <property name="text">
     <string>SaveFile</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>Новый</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>Открыть</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>Сохранить</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="text">
+    <string>Печать</string>
    </property>
   </action>
  </widget>

@@ -7,6 +7,8 @@ widget_text_document::widget_text_document(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->label->installEventFilter(this);
+
+    connect(ui->plainTextEdit, &QPlainTextEdit::textChanged, this, [=](){ m_file_changed = true; });
 }
 
 widget_text_document::~widget_text_document()
@@ -44,6 +46,26 @@ QString widget_text_document::getLableName()
 void widget_text_document::setLableName(const QString &aLable)
 {
     ui->label->setText(aLable);
+}
+
+void widget_text_document::setText(const QString &aText)
+{
+    ui->plainTextEdit->appendPlainText(aText);
+}
+
+void widget_text_document::changeFileChangedState()
+{
+    m_file_changed = false;
+}
+
+bool widget_text_document::getFileState()
+{
+    return m_file_changed;
+}
+
+QString widget_text_document::getTextPlainText()
+{
+    return ui->plainTextEdit->toPlainText();
 }
 
 void widget_text_document::on_pushButton_clicked()

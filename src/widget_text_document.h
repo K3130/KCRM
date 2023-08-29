@@ -24,6 +24,10 @@ public:
     void mouseMoveEvent(QMouseEvent *event) override;
     QString getLableName();
     void setLableName(const QString& aLable);
+    void setText(const QString& aText);
+    void changeFileChangedState();
+    bool getFileState();
+    QString getTextPlainText();
 
 
 private slots:
@@ -37,6 +41,7 @@ private:
     QPoint m_current;
     bool m_pressed;
     Ui::widget_text_document *ui;
+    bool m_file_changed = false;;
 
 signals:
     void signal_window_minimized();

@@ -6,6 +6,9 @@
 #include <QRandomGenerator>
 #include <QVector>
 #include <QDebug>
+#include <QFile>
+#include <QFileDialog>
+#include <QMessageBox>
 #include "ui_widget_create_file.h"
 #include "widget_create_file.h"
 #include "widget_text_document.h"
@@ -58,6 +61,9 @@ public slots:
     void on_actionSaveFile_triggered();
 
     void on_mdiArea_subWindowActivated(QMdiSubWindow *arg1);
+
+private slots:
+    void on_action_triggered();
 
 private:
     Ui::KCRM *ui;
