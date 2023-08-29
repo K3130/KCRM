@@ -65,6 +65,10 @@ public slots:
 private slots:
     void on_action_triggered();
 
+    void on_action_2_triggered();
+
+    void on_action_3_triggered();
+
 private:
     Ui::KCRM *ui;
     QVector<window_content> m_widgets;
