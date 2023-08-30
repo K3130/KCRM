@@ -1,27 +1,25 @@
-#include "widget_text_document.h"
-#include "ui_widget_text_document.h"
+#include "widget_table_document.h"
+#include "ui_widget_table_document.h"
 
-widget_text_document::widget_text_document(QWidget *parent) :
+widget_table_document::widget_table_document(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::widget_text_document)
+    ui(new Ui::widget_table_document)
 {
     ui->setupUi(this);
     ui->label->installEventFilter(this);
-
-    connect(ui->plainTextEdit, &QPlainTextEdit::textChanged, this, [=](){ m_file_changed = true; });
 }
 
-widget_text_document::~widget_text_document()
+widget_table_document::~widget_table_document()
 {
     delete ui;
 }
 
-void widget_text_document::mousePressEvent(QMouseEvent *event)
+void widget_table_document::mousePressEvent(QMouseEvent *event)
 {
     m_current = event->pos();
 }
 
-void widget_text_document::mouseMoveEvent(QMouseEvent *event)
+void widget_table_document::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() & Qt::LeftButton)
     {
@@ -35,45 +33,34 @@ void widget_text_document::mouseMoveEvent(QMouseEvent *event)
                 this->parentWidget()->move(newpos);
         }
     }
-
 }
 
-QString widget_text_document::getLableName()
+QString widget_table_document::getLableName()
 {
     return ui->label->text();
 }
 
-void widget_text_document::setLableName(const QString &aLable)
+void widget_table_document::setLableName(const QString &aLable)
 {
     ui->label->setText(aLable);
 }
 
-void widget_text_document::setText(const QString &aText)
-{
-    ui->plainTextEdit->appendPlainText(aText);
-}
-
-void widget_text_document::changeFileChangedState()
+void widget_table_document::changeFileChangedState()
 {
     m_file_changed = false;
 }
 
-bool widget_text_document::getFileState()
+bool widget_table_document::getFileState()
 {
     return m_file_changed;
 }
 
-QString widget_text_document::getTextPlainText()
-{
-    return ui->plainTextEdit->toPlainText();
-}
-
-void widget_text_document::on_pushButton_clicked()
+void widget_table_document::on_pushButton_clicked()
 {
     emit signal_window_close();
 }
 
-void widget_text_document::on_pushButton_3_clicked()
+void widget_table_document::on_pushButton_3_clicked()
 {
     QSize size = this->parentWidget()->minimumSizeHint();
     if(this->parentWidget()->isMaximized())
@@ -87,9 +74,8 @@ void widget_text_document::on_pushButton_3_clicked()
     }
 }
 
-void widget_text_document::on_pushButton_2_clicked()
+void widget_table_document::on_pushButton_2_clicked()
 {
     this->parentWidget()->showMinimized();
     emit signal_window_minimized();
 }
-

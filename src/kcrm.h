@@ -13,6 +13,8 @@
 #include "widget_create_file.h"
 #include "widget_text_document.h"
 #include "ui_widget_text_document.h"
+#include "widget_table_document.h"
+#include "ui_widget_table_document.h"
 #include "./ui_kcrm.h"
 
 enum class window_type
@@ -53,6 +55,8 @@ private:
 public slots:
 
     void create_text_document();
+
+    void create_table_document();
 
     void on_actionNewFile_triggered();
 

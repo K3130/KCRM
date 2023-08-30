@@ -29,7 +29,6 @@ public:
     bool getFileState();
     QString getTextPlainText();
 
-
 private slots:
     void on_pushButton_clicked();
 
@@ -39,14 +38,12 @@ private slots:
 
 private:
     QPoint m_current;
-    bool m_pressed;
     Ui::widget_text_document *ui;
     bool m_file_changed = false;;
 
 signals:
     void signal_window_minimized();
     void signal_window_close();
-
 };
 
 #endif // WIDGET_TEXT_DOCUMENT_H
