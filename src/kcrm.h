@@ -17,6 +17,10 @@
 #include "ui_widget_table_document.h"
 #include "./ui_kcrm.h"
 
+/*
+ * Главный виджет.
+*/
+
 enum class window_type
 {
    CREATE_FILE,

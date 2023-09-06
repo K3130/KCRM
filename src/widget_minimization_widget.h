@@ -10,6 +10,11 @@
 #include <QPainter>
 #include "widget_text_document.h"
 
+/*
+ * Виджет прдставления сворачивания окна,
+ * также кнопки закрыть свернуть и развернуть.
+*/
+
 namespace Ui {
 class widget_minimization_widget;
 }

@@ -8,6 +8,10 @@
 #include <QFrame>
 #include <QDebug>
 
+/*
+ * Виджет текстового документа.
+*/
+
 namespace Ui {
 class widget_text_document;
 }

@@ -3,6 +3,10 @@
 
 #include <QWidget>
 
+/*
+ * Виджет диалогового окна, с выбором создания документа.
+*/
+
 namespace Ui {
 class widget_create_file;
 }

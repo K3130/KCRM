@@ -13,6 +13,10 @@
 #include <QVector>
 #include <QScrollBar>
 
+/*
+ * Виджет табличного документа.
+*/
+
 #define MAX_COLUMNS 1000
 #define MAX_ROWS 1000
 #define COLUMN_WIDTH 10
