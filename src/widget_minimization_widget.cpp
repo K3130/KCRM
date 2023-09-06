@@ -6,7 +6,7 @@ widget_minimization_widget::widget_minimization_widget(QWidget *parent) :
     ui(new Ui::widget_minimization_widget)
 {
     ui->setupUi(this);
-    ui->horizontalLayout->setMargin(0);
+    ui->horizontalLayout->setContentsMargins(0, 0, 0, 0);
     ui->horizontalLayout->setSpacing(0);
     //ui->horizontalLayout->addStretch();
     ui->horizontalLayout->setAlignment(Qt::AlignLeft);

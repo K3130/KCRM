@@ -1,5 +1,6 @@
 #include "widget_table_document.h"
 #include "ui_widget_table_document.h"
+#include <QStandardItemModel>
 
 widget_table_document::widget_table_document(QWidget *parent) :
     QWidget(parent),
@@ -7,6 +8,15 @@ widget_table_document::widget_table_document(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->label->installEventFilter(this);
+
+    m_model = new widget_table_model(30, 30, this);
+    ui->tableView->setModel(m_model);
+    ui->tableView->show();
+
+    QScrollBar *horizontalScrollBar = ui->tableView->horizontalScrollBar();
+    connect(horizontalScrollBar, &QScrollBar::valueChanged, this, &widget_table_document::scrollHandler);
+    QScrollBar *verticalScrollBar = ui->tableView->verticalScrollBar();
+    connect(verticalScrollBar, &QScrollBar::valueChanged, this, &widget_table_document::scrollHandler);
 }
 
 widget_table_document::~widget_table_document()
@@ -53,6 +63,29 @@ void widget_table_document::changeFileChangedState()
 bool widget_table_document::getFileState()
 {
     return m_file_changed;
+}
+
+void widget_table_document::scrollHandler(int aValue)
+{
+    QScrollBar *scrollBar = qobject_cast<QScrollBar*>(sender());
+    if (scrollBar->orientation() == Qt::Horizontal) {
+        // Обработка горизонтальной прокрутки
+        int maximum = m_model->columnCount();
+        if (aValue == scrollBar->maximum() && maximum < MAX_COLUMNS) {
+                // Добавление нового столбца
+                m_model->insertColumn(maximum);
+                //ui->tableView->setColumnWidth(maximum, COLUMN_WIDTH);
+                scrollBar->setValue(aValue - 1);
+        }
+    } else {
+        // Обработка вертикальной прокрутки
+        int maximum = m_model->rowCount();
+        if (aValue == scrollBar->maximum() && maximum < MAX_ROWS) {
+                // Добавление новой строки
+                m_model->insertRow(maximum);
+                scrollBar->setValue(aValue - 1);
+        }
+    }
 }
 
 void widget_table_document::on_pushButton_clicked()
