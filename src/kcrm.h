@@ -17,8 +17,18 @@
 #include "ui_widget_table_document.h"
 #include "./ui_kcrm.h"
 
+//xls
+#include "xlsxdocument.h"
+#include "xlsxchartsheet.h"
+#include "xlsxcellrange.h"
+#include "xlsxchart.h"
+#include "xlsxrichstring.h"
+#include "xlsxworkbook.h"
+using namespace QXlsx;
+//--
+
 /*
- * Главный виджет.
+ * Главный виджет. QMdiArea в которой запускаются остальные виджеты subwindow.
 */
 
 enum class window_type

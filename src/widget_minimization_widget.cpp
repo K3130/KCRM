@@ -66,7 +66,6 @@ void widget_minimization_widget::handleButtonClick(QWidget* aWidget)
 
 }
 
-
 void widget_minimization_widget::paintEvent(QPaintEvent *pe)
 {
     QStyleOption o;

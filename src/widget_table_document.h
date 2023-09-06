@@ -54,6 +54,13 @@ public:
         return false;
     }
 
+    Qt::ItemFlags flags(const QModelIndex &aIndex) const override
+    {
+        if (!aIndex.isValid())
+            return Qt::NoItemFlags;
+        return Qt::ItemIsEditable | QAbstractTableModel::flags(aIndex);
+    }
+
     bool insertRow(int aPosition, const QModelIndex &aParent = QModelIndex()) {
         beginInsertRows(aParent, aPosition, aPosition);
         QVector<QVariant> newRow(columnCount());
@@ -71,10 +78,14 @@ public:
         return true;
     }
 
-
 private:
     QVector<QVector<QVariant>> m_data;
 };
+
+
+
+
+
 
 namespace Ui {
 class widget_table_document;
@@ -95,6 +106,9 @@ public:
     void changeFileChangedState();
     bool getFileState();
     void scrollHandler(int aValue);
+    const widget_table_model* getModel() const{
+        return m_model;
+    }
 
 private slots:
     void on_pushButton_clicked();

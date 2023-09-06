@@ -57,6 +57,11 @@ else()
     endif()
 endif()
 
+#Для работы с excel документами
+add_subdirectory(QXlsx)
+target_link_libraries(${PROJECT_NAME} PRIVATE QXlsx::QXlsx)
+
+
 target_link_libraries(KCRM PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 set_target_properties(KCRM PROPERTIES

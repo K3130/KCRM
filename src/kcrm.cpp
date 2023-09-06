@@ -31,7 +31,6 @@ void KCRM::create_text_document()
     QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(text_document, Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
     qint32 id = QRandomGenerator::global()->bounded(0, 853323747);
     QPushButton* button = new QPushButton();
-    button->setText(dynamic_cast<widget_text_document*>(text_document)->getLableName());
     m_widgets.push_back(window_content(id ,window_type::TEXT_DOCUMENT, sub_window, button));
     sub_window->setAttribute(Qt::WA_DeleteOnClose);
     int x = (ui->mdiArea->rect().width() - 500) / 2;
@@ -43,6 +42,7 @@ void KCRM::create_text_document()
             &widget_text_document::signal_window_minimized,
             this,
             [=](){
+                button->setText(dynamic_cast<widget_text_document*>(text_document)->getLableName());
                 window_minimized(id);
             });
 
@@ -70,7 +70,6 @@ void KCRM::create_table_document()
     QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(table_document, Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
     qint32 id = QRandomGenerator::global()->bounded(0, 853323747);
     QPushButton* button = new QPushButton();
-    button->setText(dynamic_cast<widget_table_document*>(table_document)->getLableName());
     m_widgets.push_back(window_content(id ,window_type::TABLE_DOCUMENT, sub_window, button));
     sub_window->setAttribute(Qt::WA_DeleteOnClose);
     int x = (ui->mdiArea->rect().width() - 500) / 2;
@@ -82,6 +81,7 @@ void KCRM::create_table_document()
             &widget_table_document::signal_window_minimized,
             this,
             [=](){
+                button->setText(dynamic_cast<widget_table_document*>(table_document)->getLableName());
                 window_minimized(id);
             });
 
@@ -116,70 +116,28 @@ void KCRM::window_close(qint32 id)
             {
                 widget_text_document *pwtd = dynamic_cast<widget_text_document*>(ui->mdiArea->activeSubWindow()->widget());
                 file_is_changed = pwtd->getFileState();
-                if (file_is_changed)
-                {
-                    QMessageBox mb;
-                    mb.setText("Сохранить файл?");
-                    mb.setWindowTitle(" ");
-                    mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-                    mb.setDefaultButton(QMessageBox::No);
-                    mb.setButtonText(QMessageBox::Yes, "Да");
-                    mb.setButtonText(QMessageBox::No, "Нет");
 
-                    int res = mb.exec();
-                    if (res == QMessageBox::Yes)
-                    {
-                        QString filename = QFileDialog::getSaveFileName(this, "Save File", pwtd->getLableName(), "Text Files (*.txt)");
-                        if (!filename.isEmpty())
-                        {
-                            QFile file(filename);
-                            if (file.open(QIODevice::WriteOnly | QIODevice::Text))
-                            {
-                                QTextStream out(&file);
-                                out << pwtd->getTextPlainText();
-                                file.close();
-                            } else {
-                                ui->plainTextEdit->appendPlainText("Неудалось сохранить файл.");
-                            }
-                        }
-                    }
-                }
-
-            } else if (m_widgets[i].type == window_type::TABLE_DOCUMENT) {
-
+             } else if (m_widgets[i].type == window_type::TABLE_DOCUMENT) {
                 widget_table_document *pwtd = dynamic_cast<widget_table_document*>(ui->mdiArea->activeSubWindow()->widget());
                 file_is_changed = pwtd->getFileState();
-                if (file_is_changed)
-                {
-                    QMessageBox mb;
-                    mb.setText("Сохранить файл?");
-                    mb.setWindowTitle(" ");
-                    mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-                    mb.setDefaultButton(QMessageBox::No);
-                    mb.setButtonText(QMessageBox::Yes, "Да");
-                    mb.setButtonText(QMessageBox::No, "Нет");
+             } else {
+             }
+
+            if (file_is_changed)
+            {
+                QMessageBox mb;
+                mb.setText("Сохранить файл?");
+                mb.setWindowTitle(" ");
+                mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+                mb.setDefaultButton(QMessageBox::No);
+                mb.setButtonText(QMessageBox::Yes, "Да");
+                mb.setButtonText(QMessageBox::No, "Нет");
 
                     int res = mb.exec();
                     if (res == QMessageBox::Yes)
                     {
-                        QString filename = QFileDialog::getSaveFileName(this, "Save File", pwtd->getLableName(), "Table Files (*.xls)");
-                        if (!filename.isEmpty())
-                        {
-                            QFile file(filename);
-                            if (file.open(QIODevice::WriteOnly | QIODevice::Text))
-                            {
-                                QTextStream out(&file);
-                                //out << pwtd->getTextPlainText();
-                                file.close();
-                            } else {
-                                ui->plainTextEdit->appendPlainText("Неудалось сохранить файл.");
-                            }
-                        }
+                        on_actionSaveFile_triggered();
                     }
-                }
-
-            } else {
-
             }
 
             m_widgets[i].pWidget->close();
@@ -315,19 +273,10 @@ void KCRM::on_actionSaveFile_triggered()
     {
         if (m_widgets[i].pWidget->widget() == ui->mdiArea->activeSubWindow()->widget())
         {
-            if (m_widgets[i].type == window_type::TEXT_DOCUMENT ||
-                    m_widgets[i].type == window_type::TABLE_DOCUMENT)
+            if (m_widgets[i].type == window_type::TEXT_DOCUMENT)
             {
                 widget_text_document *pwtd = dynamic_cast<widget_text_document*>(m_widgets[i].pWidget->widget());
-                QString suffix;
-                if ( m_widgets[i].type == window_type::TEXT_DOCUMENT )
-                    suffix = "Text Files (*.txt)";
-                else if (m_widgets[i].type == window_type::TABLE_DOCUMENT)
-                    suffix = "Table Files (*.xls)";
-                else {
-
-                }
-
+                QString suffix = "Text Files (*.txt)";
                 QString filename = QFileDialog::getSaveFileName(this, "Save File", pwtd->getLableName(), suffix);
                 if (!filename.isEmpty())
                 {
@@ -338,80 +287,90 @@ void KCRM::on_actionSaveFile_triggered()
                         out << pwtd->getTextPlainText();
 
                         QFileInfo fileInfo(file.fileName());
-
                         file.close();
-                        m_widgets[i].pWidget->close();
-                        delete m_widgets[i].pButton;
-                        m_widgets.remove(i);
 
-                        QString extension = fileInfo.suffix();
-                        if (extension == "txt")
-                        {
-                            QWidget* text_document = new widget_text_document(this);
-                            QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(text_document, Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
-                            qint32 id = QRandomGenerator::global()->bounded(0, 853323747);
-                            QPushButton* button = new QPushButton();
-                            button->setText(fileInfo.fileName());
-                            m_widgets.push_back(window_content(id ,window_type::TEXT_DOCUMENT, sub_window, button));
-                            sub_window->setAttribute(Qt::WA_DeleteOnClose);
-                            int x = (ui->mdiArea->rect().width() - 500) / 2;
-                            int y = (ui->mdiArea->rect().height() - 400) / 2;
-                            sub_window->move(x,y);
-                            sub_window->show();
+                        pwtd->setLableName(fileInfo.fileName());
 
-                            widget_text_document *pwtd = dynamic_cast<widget_text_document*>(text_document);
-                            pwtd->setLableName(fileInfo.fileName());
+//                        m_widgets[i].pWidget->close();
+//                        delete m_widgets[i].pButton;
+//                        m_widgets.remove(i);
 
-                            QFile file(filename);
-                            if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-                            {
-                                ui->plainTextEdit->appendPlainText("Невозможно открыть файл: " + fileInfo.fileName());
-                            } else
-                            {
-                                QTextStream ReadFile(&file);
-                                pwtd->setText(ReadFile.readAll());
-                                pwtd->changeFileChangedState();
-                            }
+//                        QWidget* text_document = new widget_text_document(this);
+//                        QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(text_document, Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
+//                        qint32 id = QRandomGenerator::global()->bounded(0, 853323747);
+//                        QPushButton* button = new QPushButton();
+//                        button->setText(fileInfo.fileName());
+//                        m_widgets.push_back(window_content(id ,window_type::TEXT_DOCUMENT, sub_window, button));
+//                        sub_window->setAttribute(Qt::WA_DeleteOnClose);
+//                        int x = (ui->mdiArea->rect().width() - 500) / 2;
+//                        int y = (ui->mdiArea->rect().height() - 400) / 2;
+//                        sub_window->move(x,y);
+//                        sub_window->show();
 
-                            connect(dynamic_cast<widget_text_document*>(text_document),
-                                    &widget_text_document::signal_window_minimized,
-                                    this,
-                                    [=](){
-                                        window_minimized(id);
-                                    });
+//                        widget_text_document *pwtd = dynamic_cast<widget_text_document*>(text_document);
+//                        pwtd->setLableName(fileInfo.fileName());
 
-                            connect(dynamic_cast<widget_text_document*>(text_document),
-                                    &widget_text_document::signal_window_close,
-                                    this,
-                                    [=](){
-                                       window_close(id);
-                                    });
-                        } else if (extension == "xlsx" || extension == "xls")
-                        {
+//                        QFile file(filename);
+//                        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+//                        {
+//                            ui->plainTextEdit->appendPlainText("Невозможно открыть файл: " + fileInfo.fileName());
+//                        } else
+//                        {
+//                            QTextStream ReadFile(&file);
+//                            pwtd->setText(ReadFile.readAll());
+//                            pwtd->changeFileChangedState();
+//                        }
 
-                        } else
-                        {
+//                        connect(dynamic_cast<widget_text_document*>(text_document),
+//                                &widget_text_document::signal_window_minimized,
+//                                this,
+//                                [=](){
+//                                    window_minimized(id);
+//                                });
 
-                        }
-
-
-
-
+//                        connect(dynamic_cast<widget_text_document*>(text_document),
+//                                &widget_text_document::signal_window_close,
+//                                this,
+//                                [=](){
+//                                    window_close(id);
+//                                });
                     } else {
                         ui->plainTextEdit->appendPlainText("Неудалось сохранить файл.");
                     }
                 }
-            }else {
+            }
+
+            if (m_widgets[i].type == window_type::TABLE_DOCUMENT)
+            {
+                widget_table_document *pwtd = dynamic_cast<widget_table_document*>(m_widgets[i].pWidget->widget());
+                QString suffix = "Table Files (*.xlsx)";
+                QString filename = QFileDialog::getSaveFileName(this, "Save File", pwtd->getLableName(), suffix);
+                QFileInfo fileInfo(filename);
+                if (!filename.isEmpty())
+                {
+                    QXlsx::Document xlsx;
+                    for(int row = 0; row < pwtd->getModel()->rowCount(); row++)
+                    {
+                        for(int col = 0; col < pwtd->getModel()->columnCount(); col++)
+                        {
+                            QModelIndex index = pwtd->getModel()->index(row, col);
+                            QVariant value = pwtd->getModel()->data(index);
+                            QString strValue = value.toString();
+                            int excelRow = row + 2; // Нумерация строк в Excel начинается с 1
+                            int excelCol = col + 1; // Нумерация колонок в Excel начинается с 1
+                            xlsx.write(excelRow, excelCol, strValue);
+                        }
+                    }
+                    xlsx.saveAs(filename);
+                    pwtd->setLableName(fileInfo.fileName());
+
+                }
 
             }
 
-            }
-
+        }
     }
-
-
 }
-
 
 void KCRM::on_mdiArea_subWindowActivated(QMdiSubWindow *arg1)
 {
