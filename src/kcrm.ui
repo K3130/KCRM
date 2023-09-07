@@ -178,6 +178,7 @@ color : black
    <addaction name="actionNewFile"/>
    <addaction name="actionOpenFile"/>
    <addaction name="actionSaveFile"/>
+   <addaction name="actionprintDocument"/>
   </widget>
   <widget class="QToolBar" name="toolBar_2">
    <property name="windowTitle">
@@ -198,6 +199,8 @@ color : black
    <attribute name="toolBarBreak">
     <bool>true</bool>
    </attribute>
+   <addaction name="actiontelegram"/>
+   <addaction name="actionbots"/>
   </widget>
   <widget class="QToolBar" name="toolBar_3">
    <property name="windowTitle">
@@ -218,6 +221,7 @@ color : black
    <attribute name="toolBarBreak">
     <bool>true</bool>
    </attribute>
+   <addaction name="actionwarehouse"/>
   </widget>
   <action name="actionNewFile">
    <property name="icon">
@@ -264,6 +268,54 @@ color : black
   <action name="action_4">
    <property name="text">
     <string>Печать</string>
+   </property>
+  </action>
+  <action name="actiontelegram">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/res/res/telegram.png</normaloff>:/res/res/telegram.png</iconset>
+   </property>
+   <property name="text">
+    <string>telegram</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionbots">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/res/res/bots.png</normaloff>:/res/res/bots.png</iconset>
+   </property>
+   <property name="text">
+    <string>bots</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionprintDocument">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/res/res/print.png</normaloff>:/res/res/print.png</iconset>
+   </property>
+   <property name="text">
+    <string>printDocument</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionwarehouse">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/res/res/warehouse.png</normaloff>:/res/res/warehouse.png</iconset>
+   </property>
+   <property name="text">
+    <string>warehouse</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
  </widget>
