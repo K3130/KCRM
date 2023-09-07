@@ -107,19 +107,17 @@ void KCRM::window_close(qint32 id)
 
             if (file_is_changed)
             {
-                QMessageBox mb;
+                QMessageBox mb(this);
                 mb.setText("Сохранить файл?");
                 mb.setWindowTitle(" ");
-                mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-                mb.setDefaultButton(QMessageBox::No);
-                mb.setButtonText(QMessageBox::Yes, "Да");
-                mb.setButtonText(QMessageBox::No, "Нет");
+                mb.addButton("Да", QMessageBox::YesRole);
+                mb.addButton("Нет", QMessageBox::NoRole);
 
-                    int res = mb.exec();
-                    if (res == QMessageBox::Yes)
-                    {
-                        on_actionSaveFile_triggered();
-                    }
+                int res = mb.exec();
+                if (res == QMessageBox::Yes)
+                {
+                    on_actionSaveFile_triggered();
+                }
             }
 
             m_widgets[i].pWidget->close();

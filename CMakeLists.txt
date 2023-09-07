@@ -31,6 +31,9 @@ set(PROJECT_SOURCES
         src/widget_minimization_widget.cpp
         src/widget_minimization_widget.h
         src/widget_minimization_widget.ui
+        src/widget_telegram/widget_telegram.cpp
+        src/widget_telegram/widget_telegram.h
+        src/widget_telegram/widget_telegram.ui
         resource.qrc
 )
 
@@ -38,6 +41,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(KCRM
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        src/widget_telegram/widget_telegram.h src/widget_telegram/widget_telegram.cpp src/widget_telegram/widget_telegram.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET KCRM APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
