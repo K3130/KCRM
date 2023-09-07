@@ -17,6 +17,8 @@ widget_table_document::widget_table_document(QWidget *parent) :
     connect(horizontalScrollBar, &QScrollBar::valueChanged, this, &widget_table_document::scrollHandler);
     QScrollBar *verticalScrollBar = ui->tableView->verticalScrollBar();
     connect(verticalScrollBar, &QScrollBar::valueChanged, this, &widget_table_document::scrollHandler);
+
+    connect(m_model, &widget_table_model::dataChanged, this, [=](){ m_file_changed = true; });
 }
 
 widget_table_document::~widget_table_document()
@@ -107,4 +109,9 @@ void widget_table_document::on_pushButton_2_clicked()
 {
     this->parentWidget()->showMinimized();
     emit signal_window_minimized();
+}
+
+void widget_table_document::table_changed()
+{
+    qDebug("dsadsa");
 }

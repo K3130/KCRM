@@ -27,8 +27,7 @@ class widget_table_model : public QAbstractTableModel
 
 public:
     widget_table_model(int aRow, int aCol, QObject *aParent = nullptr) : QAbstractTableModel(aParent),
-        m_data(aRow, QVector<QVariant>(aCol))
-    {
+        m_data(aRow, QVector<QVariant>(aCol)) {
 
     }
 
@@ -49,6 +48,7 @@ public:
     bool setData(const QModelIndex &aIndex, const QVariant &aValue, int aRole = Qt::EditRole) override {
         if (aIndex.isValid() && aRole == Qt::EditRole) {
             m_data[aIndex.row()][aIndex.column()] = aValue;
+            emit dataChanged();
             return true;
         }
         return false;
@@ -80,6 +80,8 @@ public:
 
 private:
     QVector<QVector<QVariant>> m_data;
+signals:
+    void dataChanged();
 };
 
 
@@ -117,6 +119,8 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void table_changed();
+
 private:
     QPoint m_current;
     Ui::widget_table_document *ui;
@@ -126,6 +130,7 @@ private:
 signals:
     void signal_window_minimized();
     void signal_window_close();
+
 };
 
 #endif // WIDGET_TABLE_DOCUMENT_H
