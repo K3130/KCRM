@@ -213,22 +213,10 @@ void KCRM::on_actionOpenFile_triggered()
    {
        QFileInfo fileInfo(filename);
        QString extension = fileInfo.suffix();
-       if (extension == "txt")
-       {
-           QWidget* text_document = new widget_text_document(this);
-           QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(text_document, Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
-           qint32 id = QRandomGenerator::global()->bounded(0, 853323747);
-           QPushButton* button = new QPushButton();
-           button->setText(fileInfo.fileName());
-           m_widgets.push_back(window_content(id ,window_type::TEXT_DOCUMENT, sub_window, button));
-           sub_window->setAttribute(Qt::WA_DeleteOnClose);
-           int x = (ui->mdiArea->rect().width() - 500) / 2;
-           int y = (ui->mdiArea->rect().height() - 400) / 2;
-           sub_window->move(x,y);
-           sub_window->show();
-
-           widget_text_document *pwtd = dynamic_cast<widget_text_document*>(text_document);
-           pwtd->setLableName(fileInfo.fileName());
+       if (extension == "txt" || extension == "log")
+       {          
+           create_text_document();
+           widget_text_document *pwtd = dynamic_cast<widget_text_document*>(ui->mdiArea->activeSubWindow()->widget());
 
            QFile file(filename);
            if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -239,28 +227,34 @@ void KCRM::on_actionOpenFile_triggered()
                QTextStream ReadFile(&file);
                pwtd->setText(ReadFile.readAll());
                pwtd->changeFileChangedState();
+               pwtd->setLableName(fileInfo.fileName());
            }
-
-           connect(dynamic_cast<widget_text_document*>(text_document),
-                   &widget_text_document::signal_window_minimized,
-                   this,
-                   [=](){
-                       window_minimized(id);
-                   });
-
-           connect(dynamic_cast<widget_text_document*>(text_document),
-                   &widget_text_document::signal_window_close,
-                   this,
-                   [=](){
-                      window_close(id);
-                   });
-
-       } else if (extension == "xlsx" || extension == "xls")
+       } else if (extension == "xlsx")
        {
+           create_table_document();
+           widget_table_document *pwtd = dynamic_cast<widget_table_document*>(ui->mdiArea->activeSubWindow()->widget());
+
+           QXlsx::Document xlsx(filename);
+
+           const int rowCount = xlsx.dimension().rowCount();
+           const int columnCount = xlsx.dimension().columnCount();
+
+           for (int row = 1; row <= rowCount; ++row)
+           {
+               QModelIndex parentIndex = pwtd->getModel()->index(row -1, 0);
+               for (int col = 1; col <= columnCount; ++col)
+               {
+                   QString cellValue = xlsx.read(row, col).toString();
+                   QModelIndex index = pwtd->getModel()->index(row - 1, col -1, parentIndex);
+                   pwtd->getModel()->setData(index, cellValue);
+                }
+            }
+            pwtd->changeFileChangedState();
+            pwtd->setLableName(fileInfo.fileName());
 
        } else
        {
-           ui->plainTextEdit->appendPlainText("Неизвестное расширение файла: " + extension);
+           ui->plainTextEdit->appendPlainText("Неподдерживаемое расширение файла: " + extension);
        }
 
 

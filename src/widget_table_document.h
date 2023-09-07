@@ -108,7 +108,7 @@ public:
     void changeFileChangedState();
     bool getFileState();
     void scrollHandler(int aValue);
-    const widget_table_model* getModel() const{
+    widget_table_model* getModel() const {
         return m_model;
     }
 
