@@ -18,15 +18,6 @@ KCRM::~KCRM()
 
 void KCRM::create_text_document()
 {
-    for (size_t i = 0; i < m_widgets.size(); i++)
-    {
-        if (m_widgets[i].type == window_type::CREATE_FILE)
-        {
-            m_widgets[i].pWidget->close();
-            m_widgets.remove(i);
-        }
-    }
-
     QWidget* text_document = new widget_text_document(this);
     QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(text_document, Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
     qint32 id = QRandomGenerator::global()->bounded(0, 853323747);
@@ -57,15 +48,6 @@ void KCRM::create_text_document()
 
 void KCRM::create_table_document()
 {
-    for (size_t i = 0; i < m_widgets.size(); i++)
-    {
-        if (m_widgets[i].type == window_type::CREATE_FILE)
-        {
-            m_widgets[i].pWidget->close();
-            m_widgets.remove(i);
-        }
-    }
-
     QWidget* table_document = new widget_table_document(this);
     QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(table_document, Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
     qint32 id = QRandomGenerator::global()->bounded(0, 853323747);
@@ -150,19 +132,13 @@ void KCRM::window_close(qint32 id)
 
 void KCRM::on_actionNewFile_triggered()
 {
-    bool flag = false;
-    for (size_t i = 0; i < m_widgets.size(); i++)
-    {
-        if (m_widgets[i].type == window_type::CREATE_FILE)
-            flag = true;
-    }
-    if (flag)
+    if (m_if_one_new_file_widget)
     {
         return;
     }
     else
     {
-        Ui::widget_create_file m_wcf;
+        m_if_one_new_file_widget = true;
         QWidget* createnewfile = new QWidget(this);
         m_wcf.setupUi(createnewfile);
 
@@ -180,10 +156,35 @@ void KCRM::on_actionNewFile_triggered()
         sub_window->show();
 
 
-        connect(m_wcf.pushButton_2, &QPushButton::clicked, this, &KCRM::create_text_document);
-        connect(m_wcf.pushButton_3, &QPushButton::clicked, this, &KCRM::create_table_document);
+        connect(m_wcf.pushButton_2, &QPushButton::clicked, this, [=]()
+        {
+            create_text_document();
+            m_if_one_new_file_widget = false;
+            sub_window->close();
+            for (size_t i = 0; i < m_widgets.size(); i++)
+            {
+                if (m_widgets[i].type == window_type::CREATE_FILE)
+                {
+                    m_widgets.remove(i);
+                }
+            }
+        });
+        connect(m_wcf.pushButton_3, &QPushButton::clicked, this, [=]()
+        {
+            create_table_document();
+            m_if_one_new_file_widget = false;
+            sub_window->close();
+            for (size_t i = 0; i < m_widgets.size(); i++)
+            {
+                if (m_widgets[i].type == window_type::CREATE_FILE)
+                {
+                    m_widgets.remove(i);
+                }
+            }
+        });
         connect(m_wcf.pushButton, &QPushButton::clicked, this, [=]()
         {
+            m_if_one_new_file_widget = false;
             sub_window->close();
             for (size_t i = 0; i < m_widgets.size(); i++)
             {
@@ -349,5 +350,21 @@ void KCRM::on_action_2_triggered()
 void KCRM::on_action_3_triggered()
 {
     on_actionSaveFile_triggered();
+}
+
+
+void KCRM::on_actionprintDocument_triggered()
+{
+    if (ui->mdiArea->activeSubWindow() && m_if_one_new_file_widget == false)
+    {
+        QPrinter printer;
+        QPrintDialog dialog(&printer, this);
+        if (dialog.exec() == QDialog::Accepted)
+        {
+            QPainter painter(&printer);
+            ui->mdiArea->activeSubWindow()->widget()->render(&painter);
+        }
+    }
+
 }
 

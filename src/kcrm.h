@@ -9,6 +9,9 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QPrintDialog>
+#include <QPainter>
 #include "ui_widget_create_file.h"
 #include "widget_create_file.h"
 #include "widget_text_document.h"
@@ -81,6 +84,9 @@ public slots:
     void on_mdiArea_subWindowActivated(QMdiSubWindow *arg1);
 
 private slots:
+    void on_actionprintDocument_triggered();
+
+private slots:
     void on_action_triggered();
 
     void on_action_2_triggered();
@@ -90,6 +96,8 @@ private slots:
 private:
     Ui::KCRM *ui;
     QVector<window_content> m_widgets;
+    Ui::widget_create_file m_wcf;
+    bool m_if_one_new_file_widget = false;
 
 };
 #endif // KCRM_H

@@ -60,7 +60,9 @@ endif()
 #Для работы с excel документами
 add_subdirectory(QXlsx)
 target_link_libraries(${PROJECT_NAME} PRIVATE QXlsx::QXlsx)
-
+#Принтер...
+find_package(Qt6 COMPONENTS PrintSupport REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::PrintSupport)
 
 target_link_libraries(KCRM PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
