@@ -62,11 +62,13 @@ else()
 endif()
 
 #Для работы с excel документами
-add_subdirectory(QXlsx)
+
+#set(CPACK_PACKAGE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/third-party/QXlsx")
+add_subdirectory(third-party/QXlsx/)
 target_link_libraries(${PROJECT_NAME} PRIVATE QXlsx::QXlsx)
 #Принтер...
-find_package(Qt6 COMPONENTS PrintSupport REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::PrintSupport)
+find_package(Qt5 COMPONENTS PrintSupport REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::PrintSupport)
 
 target_link_libraries(KCRM PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 

@@ -19,6 +19,7 @@
 #include "widget_table_document.h"
 #include "ui_widget_table_document.h"
 #include "./ui_kcrm.h"
+#include "widget_telegram/widget_telegram.h"
 
 //xls
 #include "xlsxdocument.h"
@@ -27,6 +28,7 @@
 #include "xlsxchart.h"
 #include "xlsxrichstring.h"
 #include "xlsxworkbook.h"
+
 using namespace QXlsx;
 //--
 
@@ -38,7 +40,8 @@ enum class window_type
 {
    CREATE_FILE,
    TEXT_DOCUMENT,
-   TABLE_DOCUMENT
+   TABLE_DOCUMENT,
+   OTHER
 };
 
 struct window_content
@@ -84,6 +87,9 @@ public slots:
     void on_mdiArea_subWindowActivated(QMdiSubWindow *arg1);
 
 private slots:
+    void on_actiontelegram_triggered();
+
+private slots:
     void on_actionprintDocument_triggered();
 
 private slots:
@@ -98,6 +104,7 @@ private:
     QVector<window_content> m_widgets;
     Ui::widget_create_file m_wcf;
     bool m_if_one_new_file_widget = false;
+    bool m_if_telegram_open = false;
 
 };
 #endif // KCRM_H
