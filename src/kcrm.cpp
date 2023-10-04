@@ -344,6 +344,12 @@ void KCRM::on_action_3_triggered()
     on_actionSaveFile_triggered();
 }
 
+void KCRM::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+    emit windowResized();
+}
+
 
 void KCRM::on_actionprintDocument_triggered()
 {
@@ -377,6 +383,14 @@ void KCRM::on_actiontelegram_triggered()
         QPushButton* button = new QPushButton();
         m_widgets.push_back(window_content(id ,window_type::OTHER, sub_window, button));
         sub_window->setAttribute(Qt::WA_DeleteOnClose);
+        //Приклеиваем телеграм к правой стороне на всю высоту
+        QRect mdiRect = ui->mdiArea->geometry();
+        QRect subWindowRect = sub_window->geometry();
+        int newX = mdiRect.right() - subWindowRect.width();
+        int newY = subWindowRect.y();
+        int newHeight = mdiRect.height();
+        sub_window->setGeometry(newX, newY, subWindowRect.width(), newHeight);
+
         sub_window->show();
 
         connect(dynamic_cast<widget_telegram*>(telegram),
@@ -394,6 +408,18 @@ void KCRM::on_actiontelegram_triggered()
                     m_if_telegram_open = false;
                     window_close(id);
                 });
+        //Обновляем размеры телеграм при изменении размеров главного окна
+        connect(this, &KCRM::windowResized,
+                this,
+                [=](){
+                    QRect mdiRect = ui->mdiArea->geometry();
+                    QRect subWindowRect = sub_window->geometry();
+                    int newX = mdiRect.right() - subWindowRect.width();
+                    int newY = subWindowRect.y();
+                    int newHeight = mdiRect.height();
+                    sub_window->setGeometry(newX, newY, subWindowRect.width(), newHeight);
+                });
+
     }
 
 

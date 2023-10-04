@@ -6,6 +6,8 @@ widget_telegram::widget_telegram(QWidget *parent) :
     ui(new Ui::widget_telegram)
 {
     ui->setupUi(this);
+
+
 }
 
 widget_telegram::~widget_telegram()

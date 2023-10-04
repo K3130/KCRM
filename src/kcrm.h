@@ -99,6 +99,12 @@ private slots:
 
     void on_action_3_triggered();
 
+signals:
+    void windowResized();
+
+protected:
+    void resizeEvent(QResizeEvent *event);
+
 private:
     Ui::KCRM *ui;
     QVector<window_content> m_widgets;
