@@ -11,8 +11,13 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#set(CMAKE_PREFIX_PATH "C:/msys64/mingw64/lib/cmake/Qt5")
+
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+
+find_package(Qt5 COMPONENTS Webkit REQUIRED)
+find_package(Qt5 COMPONENTS WebKitWidgets REQUIRED)
 
 set(PROJECT_SOURCES
         src/main.cpp
@@ -36,33 +41,17 @@ set(PROJECT_SOURCES
         src/widget_telegram/widget_telegram.ui
         resource.qrc
 )
+add_executable(KCRM ${PROJECT_SOURCES})
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(KCRM
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-        src/widget_telegram/widget_telegram.h src/widget_telegram/widget_telegram.cpp src/widget_telegram/widget_telegram.ui
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET KCRM APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
+if (WIN32)
+    message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~OS Windows~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 else()
-    if(ANDROID)
-        add_library(KCRM SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(KCRM
-            ${PROJECT_SOURCES}
-        )
-    endif()
-endif()
+    message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~OS Linux~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+endif (WIN32)
+message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~You Qt version ->> " ${QT_VERSION_MAJOR} ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~)
+message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Cmake version ->> " ${CMAKE_VERSION} ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~)
 
 #Для работы с excel документами
-
 #set(CPACK_PACKAGE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/third-party/QXlsx")
 add_subdirectory(third-party/QXlsx/)
 target_link_libraries(${PROJECT_NAME} PRIVATE QXlsx::QXlsx)
@@ -72,11 +61,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::PrintSupport)
 
 target_link_libraries(KCRM PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
+
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::WebKit)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::WebKitWidgets)
+
 set_target_properties(KCRM PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
 

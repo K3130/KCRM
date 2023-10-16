@@ -2,7 +2,7 @@
 #define WIDGET_TELEGRAM_H
 
 #include <QWidget>
-
+#include <QtWebKitWidgets/QWebView>
 /*
  * Виджет telegram.
 */
