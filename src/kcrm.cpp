@@ -142,9 +142,7 @@ void KCRM::on_actionNewFile_triggered()
 
         QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(createnewfile, Qt::FramelessWindowHint |
                                                              Qt::CustomizeWindowHint);
-        QRandomGenerator generator;
-        qint32 id = generator.generate() & std::numeric_limits<qint32>::max();
-        m_widgets.push_back(window_content(id, window_type::CREATE_FILE, sub_window, nullptr));
+        m_widgets.push_back(window_content(0, window_type::CREATE_FILE, sub_window, nullptr));
         sub_window->setAttribute(Qt::WA_DeleteOnClose);
 
         int x = (ui->mdiArea->rect().width() - 200) / 2;
