@@ -11,13 +11,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-#set(CMAKE_PREFIX_PATH "C:/msys64/mingw64/lib/cmake/Qt5")
+#set(CMAKE_PREFIX_PATH "C:/msys64/mingw64/lib/cmake/Qt6")
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
-find_package(Qt5 COMPONENTS Webkit REQUIRED)
-find_package(Qt5 COMPONENTS WebKitWidgets REQUIRED)
 
 set(PROJECT_SOURCES
         src/main.cpp
@@ -62,8 +60,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::PrintSupport)
 target_link_libraries(KCRM PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::WebKit)
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::WebKitWidgets)
 
 set_target_properties(KCRM PROPERTIES
     WIN32_EXECUTABLE TRUE

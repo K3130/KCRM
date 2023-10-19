@@ -7,9 +7,10 @@ widget_telegram::widget_telegram(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QWebView webView;
-    webView.show();
-    webView.load(QUrl("http://www.google.com"));
+
+
+
+
 }
 
 widget_telegram::~widget_telegram()
