@@ -37,6 +37,8 @@ set(PROJECT_SOURCES
         src/widget_telegram/widget_telegram.cpp
         src/widget_telegram/widget_telegram.h
         src/widget_telegram/widget_telegram.ui
+        src/data_base/data_base.h
+        src/data_base/data_base.cpp
         resource.qrc
 )
 add_executable(KCRM ${PROJECT_SOURCES})
