@@ -8,5 +8,6 @@
 		<file>res/print.png</file>
 		<file>res/telegram.png</file>
 		<file>res/warehouse.png</file>
+		<file>res/ship.png</file>
     </qresource>
 </RCC>

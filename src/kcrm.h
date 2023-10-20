@@ -20,6 +20,7 @@
 #include "ui_widget_table_document.h"
 #include "./ui_kcrm.h"
 #include "widget_telegram/widget_telegram.h"
+#include "data_base/data_base.h"
 
 //xls
 #include "xlsxdocument.h"

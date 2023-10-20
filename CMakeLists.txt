@@ -14,7 +14,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(CMAKE_PREFIX_PATH "C:/msys64/mingw64/lib/cmake/Qt6")
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Sql REQUIRED)
 
 
 set(PROJECT_SOURCES
@@ -39,6 +39,9 @@ set(PROJECT_SOURCES
         src/widget_telegram/widget_telegram.ui
         src/data_base/data_base.h
         src/data_base/data_base.cpp
+        src/widget_logon.h
+        src/widget_logon.cpp
+        src/widget_logon.ui
         resource.qrc
 )
 add_executable(KCRM ${PROJECT_SOURCES})
@@ -59,7 +62,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE QXlsx::QXlsx)
 find_package(Qt5 COMPONENTS PrintSupport REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::PrintSupport)
 
-target_link_libraries(KCRM PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(KCRM PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql)
 
 
 
