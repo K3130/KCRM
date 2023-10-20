@@ -42,6 +42,8 @@ set(PROJECT_SOURCES
         src/widget_logon.h
         src/widget_logon.cpp
         src/widget_logon.ui
+        src/data_base/data_base_manager_kcrm.h
+        src/data_base/data_base_manager_kcrm.cpp
         resource.qrc
 )
 add_executable(KCRM ${PROJECT_SOURCES})
