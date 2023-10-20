@@ -16,6 +16,10 @@ widget_logon::widget_logon(QWidget *parent) :
     ui->label_2->setStyleSheet("QLabel { color : red; font-size : 15pt; }");
     ui->label_3->setStyleSheet("QLabel { color : red; font-size : 15pt; }");
 
+    ui->lineEdit->setPlaceholderText(QString("Login"));
+    ui->lineEdit->setFocus();
+    ui->lineEdit_2->setPlaceholderText(QString("Password"));
+    ui->lineEdit_2->setEchoMode(QLineEdit::Password);
     //test
     verify();
 }
