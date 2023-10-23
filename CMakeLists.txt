@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #set(CMAKE_PREFIX_PATH "C:/msys64/mingw64/lib/cmake/Qt6")
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Core REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Sql REQUIRED)
 
 
@@ -64,7 +64,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE QXlsx::QXlsx)
 find_package(Qt5 COMPONENTS PrintSupport REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::PrintSupport)
 
-target_link_libraries(KCRM PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql)
+target_link_libraries(KCRM PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Sql)
 
 
 
@@ -81,5 +81,12 @@ add_custom_command(
   COMMAND ${CMAKE_COMMAND} -E copy_directory
    ${CMAKE_CURRENT_SOURCE_DIR}/res/
     $<TARGET_FILE_DIR:${PROJECT_NAME}>/res)
+
+add_custom_command(
+   TARGET ${PROJECT_NAME} POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy
+   ${CMAKE_CURRENT_SOURCE_DIR}/network_settings.json
+   $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+
 
 

@@ -1,6 +1,8 @@
 #include "widget_logon.h"
 #include "kcrm.h"
+#include "data_base/data_base_manager_kcrm.h"
 #include <QApplication>
+#include <QMessageBox>
 
 void open_kcrm()
 {
@@ -11,10 +13,23 @@ void open_kcrm()
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //Auth
+
     widget_logon logon;
     logon.show();
-    QObject::connect(&logon, &widget_logon::verify_succes, open_kcrm);
+
+    data_base_manager_kcrm db;
+    if(!db.authorization())
+    {
+        QMessageBox::warning(nullptr, "Ошибка", "Нет связи с БД.", QMessageBox::Ok);
+    }
+    else
+    {
+        logon.set_network_name(db.get_host_string());
+        logon.set_port_num(db.get_port_string());
+    }
+    //Auth
+
+
 
 
 

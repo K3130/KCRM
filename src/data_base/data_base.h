@@ -62,6 +62,7 @@ public:
                       quint32 aPort,
                       const QString &aUserName,
                       const QString &aPassword);
+
     bool closeDataBase(QSqlDatabase &aDataBase, const QString &aFileName);
     bool createTable(QSqlDatabase &aDataBase,
                      const QString &aTableName,

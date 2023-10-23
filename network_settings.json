@@ -1,0 +1,7 @@
+{
+	"db_name": "kcrm",
+	"db_host": "127.0.0.1",
+	"db_port": "5432",
+	"db_login": "kcrm",
+	"db_pass": "kcrm"
+}

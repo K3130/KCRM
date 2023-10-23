@@ -20,8 +20,9 @@ widget_logon::widget_logon(QWidget *parent) :
     ui->lineEdit->setFocus();
     ui->lineEdit_2->setPlaceholderText(QString("Password"));
     ui->lineEdit_2->setEchoMode(QLineEdit::Password);
-    //test
-    verify();
+
+    ui->lineEdit_4->setReadOnly(true);
+    ui->lineEdit_3->setReadOnly(true);
 }
 
 widget_logon::~widget_logon()
@@ -29,20 +30,21 @@ widget_logon::~widget_logon()
     delete ui;
 }
 
+void widget_logon::set_network_name(const QString &aAddr)
+{
+    ui->lineEdit_4->setText(aAddr);
+}
+
+void widget_logon::set_port_num(const QString &aPort)
+{
+    ui->lineEdit_3->setText(aPort);
+}
+
 void widget_logon::on_pushButton_clicked()
 {
     this->close();
 }
 
-bool widget_logon::verify()
-{
-    bool test = true;
-    if(test)
-    {
-        emit verify_succes();
-        return true;
-    }
-    return false;
-}
+
 
 

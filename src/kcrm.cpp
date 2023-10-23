@@ -10,11 +10,7 @@ KCRM::KCRM(QWidget *parent)
     ui->label->setMaximumHeight(12);
     ui->mdiArea->viewport()->setMouseTracking(true);
 
-    //---database
-    QSqlDatabase p_db;
-    data_base db;
-    if(!db.openDataBase(p_db, "testdb", "localhost", 5432, "user", "postgres"))
-        ui->plainTextEdit->appendPlainText(db.getLastError());
+
 }
 
 KCRM::~KCRM()
