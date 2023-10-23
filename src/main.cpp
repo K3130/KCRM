@@ -26,8 +26,10 @@ int main(int argc, char *argv[])
     {
         logon.set_network_name(db.get_host_string());
         logon.set_port_num(db.get_port_string());
+
+        db.check_user_tables();
     }
-    //Auth
+
 
 
 

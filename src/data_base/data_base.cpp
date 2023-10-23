@@ -65,3 +65,48 @@ bool data_base::createTable(QSqlDatabase &aDataBase, const QString &aTableName, 
     }
     return true;
 }
+
+bool data_base::InsertRow(QSqlDatabase &aDataBase, const QString &aTableName, const QVector<QString> &aColumns, const QVector<QVariant> &aValues)
+{
+    if (aColumns.size() != aValues.size())
+    {
+        qDebug() <<  "Quantities and values are not equal!";
+        return false;
+    }
+
+    QSqlQuery query(aDataBase);
+
+    QString str = "INSERT INTO " + aTableName + "(";
+
+    for (size_t i = 0; i < aColumns.size(); i++)
+    {
+        str += " ";
+        str += aColumns[i] + ",";
+    }
+    str.chop(1);
+    str += ") ";
+    str += "   VALUES(";
+
+    for (size_t i = 0; i < aColumns.size(); i++)
+    {
+        str += ":" + aColumns[i]  + ",";
+    }
+    str.chop(1);
+    str += ")";
+
+    query.prepare(str);
+
+    for (size_t i = 0; i < aColumns.size(); i++)
+    {
+        query.bindValue(":" + aColumns[i], aValues[i]);
+    }
+
+    if(!query.exec())
+    {
+        qDebug() <<  query.lastError().text() << '\n' << query.lastQuery();
+        return false;
+    }
+    qDebug() << "Insert row: " << aTableName << Qt::endl;
+
+    return true;
+}

@@ -18,6 +18,7 @@ class data_base_manager_kcrm : public QObject
 public:
     data_base_manager_kcrm();
     bool authorization();
+    bool check_user_tables();
     QString get_host_string() {return m_host;}
     QString get_port_string() {return m_port;}
 private:

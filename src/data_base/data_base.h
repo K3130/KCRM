@@ -6,6 +6,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QVector>
+#include <QDebug>
 
 enum class TYPE_FIELD
 {
@@ -67,6 +68,10 @@ public:
     bool createTable(QSqlDatabase &aDataBase,
                      const QString &aTableName,
                      const QVector<ColumnSettings> &aColumns);
+    bool InsertRow(QSqlDatabase &aDataBase,
+                   const QString &aTableName,
+                   const QVector<QString> &aColumns,
+                   const QVector<QVariant> &aValues);
     QString getLastError() { return m_last_error; }
 private:
     QString m_last_error;
