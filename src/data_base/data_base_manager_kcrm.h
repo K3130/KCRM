@@ -8,8 +8,9 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
-/*
- * Класс для взаимодействия с базой
+/*!
+ * \author Konstantin Smirnov
+ * \brief Класс для взаимодействия с базой
 */
 
 class data_base_manager_kcrm : public QObject
@@ -17,7 +18,19 @@ class data_base_manager_kcrm : public QObject
     Q_OBJECT
 public:
     data_base_manager_kcrm();
+    /*!
+     * Подключение к серверу БД
+     * \brief authorization
+     * \return результат проверки.
+     */
     bool authorization();
+    /*!
+     * Проверяет есть ли в базе таблица users
+     * если ее нет, создает таблицу и
+     * пользователя Admin по умолчанию
+     * \brief check_user_tables
+     * \return результат проверки.
+     */
     bool check_user_tables();
     QString get_host_string() {return m_host;}
     QString get_port_string() {return m_port;}

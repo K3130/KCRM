@@ -52,26 +52,46 @@ struct ColumnSettings
     QString m_columnName;
 };
 
+/*!
+ * API для работы с базой postgres SQL
+ * \author Konstantin Smirnov
+ * \brief The data_base class
+ */
+
 class data_base : public QObject
 {
     Q_OBJECT
 public:
     data_base();
+    /*!
+     * \brief Открытие базы
+     */
     bool openDataBase(QSqlDatabase &aDataBase,
                       const QString &aFileName,
                       const QString &aHostName,
                       quint32 aPort,
                       const QString &aUserName,
                       const QString &aPassword);
-
+    /*!
+     * \brief Закрытие базы
+     */
     bool closeDataBase(QSqlDatabase &aDataBase, const QString &aFileName);
+    /*!
+     * \brief Создание таблицы с произвольным количеством столбцов
+     */
     bool createTable(QSqlDatabase &aDataBase,
                      const QString &aTableName,
                      const QVector<ColumnSettings> &aColumns);
+    /*!
+     * \brief Вставка строки в базу
+     */
     bool InsertRow(QSqlDatabase &aDataBase,
                    const QString &aTableName,
                    const QVector<QString> &aColumns,
                    const QVector<QVariant> &aValues);
+    /*!
+     * \brief Вернуть последнюю ошибку
+     */
     QString getLastError() { return m_last_error; }
 private:
     QString m_last_error;
