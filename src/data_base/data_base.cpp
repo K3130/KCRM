@@ -121,6 +121,11 @@ bool data_base::randomQuery(QSqlDatabase &aDataBase, const QString &aQuery)
         return false;
     }
 
+    if(!query.next())
+    {
+        return false;
+    }
+
     qDebug() << "Random query successfully: " << query.lastQuery() << Qt::endl;
     return true;
 }

@@ -85,7 +85,7 @@ bool data_base_manager_kcrm::check_user_tables()
 
 bool data_base_manager_kcrm::user_verify(const QString& aLogin, const QString& aPass)
 {
-    QString query = QString("SELECT * FROM users WHERE Login = '%1' AND Password = '%2'")
+    QString query = QString("SELECT * FROM users WHERE login = '%1' AND password = '%2'")
                            .arg(aLogin)
                            .arg(aPass);
     if(!m_db.randomQuery(m_qsdb, query))
