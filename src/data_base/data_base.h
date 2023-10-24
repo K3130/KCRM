@@ -93,6 +93,10 @@ public:
      * \brief Вернуть последнюю ошибку
      */
     QString getLastError() { return m_last_error; }
+    /*!
+     * \brief Произвольный запрос
+     */
+    bool randomQuery(QSqlDatabase &aDataBase, const QString &aQuery);
 private:
     QString m_last_error;
 };

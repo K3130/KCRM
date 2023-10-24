@@ -32,6 +32,12 @@ public:
      * \return результат проверки.
      */
     bool check_user_tables();
+    /*!
+     * Проверка пользователя и пароля
+     * \brief user_verify
+     * \return результат проверки
+     */
+    bool user_verify(const QString& aLogin, const QString& aPass);
     QString get_host_string() {return m_host;}
     QString get_port_string() {return m_port;}
 private:

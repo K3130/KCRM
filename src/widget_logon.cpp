@@ -1,7 +1,8 @@
 #include "widget_logon.h"
 #include "ui_widget_logon.h"
 
-widget_logon::widget_logon(QWidget *parent) :
+widget_logon::widget_logon(data_base_manager_kcrm *aDbManager, QWidget *parent) :
+    m_dbmk(aDbManager),
     QWidget(parent),
     ui(new Ui::widget_logon)
 {
@@ -23,6 +24,8 @@ widget_logon::widget_logon(QWidget *parent) :
 
     ui->lineEdit_4->setReadOnly(true);
     ui->lineEdit_3->setReadOnly(true);
+
+
 }
 
 widget_logon::~widget_logon()
@@ -40,11 +43,31 @@ void widget_logon::set_port_num(const QString &aPort)
     ui->lineEdit_3->setText(aPort);
 }
 
+bool widget_logon::check_users()
+{
+    return m_dbmk->check_user_tables();
+}
+
 void widget_logon::on_pushButton_clicked()
 {
     this->close();
 }
 
+void widget_logon::on_pushButton_2_clicked()
+{
+    if(!m_dbmk->user_verify(ui->lineEdit->text(), ui->lineEdit_2->text()))
+    {
+        QMessageBox::warning(nullptr, "Ошибка", "Не верный логин или пароль.", QMessageBox::Ok);
+    }
+    else
+    {
+        m_kcrm.show();
+        this->close();
+    }
+}
 
-
+bool widget_logon::authorization()
+{
+    return m_dbmk->authorization();
+}
 

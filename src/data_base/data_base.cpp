@@ -110,3 +110,17 @@ bool data_base::InsertRow(QSqlDatabase &aDataBase, const QString &aTableName, co
 
     return true;
 }
+
+bool data_base::randomQuery(QSqlDatabase &aDataBase, const QString &aQuery)
+{
+    QSqlQuery query(aDataBase);
+
+    if(!query.exec(aQuery))
+    {
+        qDebug() <<  query.lastError().text() << '\n' << query.lastQuery();
+        return false;
+    }
+
+    qDebug() << "Random query successfully: " << query.lastQuery() << Qt::endl;
+    return true;
+}
