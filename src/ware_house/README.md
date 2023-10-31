@@ -1,7 +1,6 @@
 # KCRM  
 ### СКЛАД анализ и структура, в разработке: 
-
-<span style="color:green;font-weight:700;font-size:20px">
+<red> red color markdown text</red>
 Таблица "товары":  
 Name	|Data type	|Size	|Note	|    
 Товар	 character varying	 250	 Наименование  
@@ -19,5 +18,5 @@ Name	|Data type	|Size	|Note	|
 Годен до	date		 4	 Срок годности до  
 Сертификат bool			 1	 Наличие сертификата  
 Описание text				 Описание товара  
-</span>
+
 
