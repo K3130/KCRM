@@ -219,6 +219,7 @@ void KCRM::on_actionOpenFile_triggered()
            QFile file(filename);
            if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
            {
+               qDebug(logger_monitor::logDebug()) << "Невозможно открыть файл: " + fileInfo.fileName();
                ui->plainTextEdit->appendPlainText("Невозможно открыть файл: " + fileInfo.fileName());
            } else
            {

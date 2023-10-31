@@ -21,6 +21,7 @@
 #include "./ui_kcrm.h"
 #include "widget_telegram/widget_telegram.h"
 #include "data_base/data_base.h"
+#include "logger_monitor.h"
 
 //xls
 #include "xlsxdocument.h"
