@@ -25,7 +25,8 @@ widget_logon::widget_logon(data_base_manager_kcrm *aDbManager, QWidget *parent) 
     ui->lineEdit_4->setReadOnly(true);
     ui->lineEdit_3->setReadOnly(true);
 
-
+    qInstallMessageHandler(logger_monitor::messageHandler);
+    qDebug(logger_monitor::logDebug()) << "Run app. ";
 }
 
 widget_logon::~widget_logon()
@@ -58,10 +59,12 @@ void widget_logon::on_pushButton_2_clicked()
     if(!m_dbmk->user_verify(ui->lineEdit->text(), ui->lineEdit_2->text()))
     {
         QMessageBox::warning(nullptr, "Ошибка", "Не верный логин или пароль.", QMessageBox::Ok);
+        qDebug(logger_monitor::logDebug()) << "Ошибка: Не верный логин или пароль.";
     }
     else
     {
         m_kcrm.show();
+        qDebug(logger_monitor::logDebug()) << "Вход выполнен пользователем: " << ui->lineEdit->text();
         this->close();
     }
 }

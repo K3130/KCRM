@@ -90,7 +90,7 @@ bool data_base_manager_kcrm::user_verify(const QString& aLogin, const QString& a
                            .arg(aPass);
     if(!m_db.randomQuery(m_qsdb, query))
     {
-        qDebug() << "Error authorization";
+        qDebug() << "Error authorization from " << aLogin;
         return false;
     }
     return true;

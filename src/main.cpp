@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     if(!logon.authorization())
     {
         QMessageBox::warning(nullptr, "Ошибка", "Нет связи с БД.", QMessageBox::Ok);
+        qDebug() << "Ошибка. Нет связи с БД.";
     }
     else
     {

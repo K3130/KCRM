@@ -10,7 +10,7 @@ KCRM::KCRM(QWidget *parent)
     ui->label->setMaximumHeight(12);
     ui->mdiArea->viewport()->setMouseTracking(true);
 
-
+    qInstallMessageHandler(logger_monitor::messageHandler);
 }
 
 KCRM::~KCRM()
@@ -227,6 +227,7 @@ void KCRM::on_actionOpenFile_triggered()
                pwtd->setText(ReadFile.readAll());
                pwtd->changeFileChangedState();
                pwtd->setLableName(fileInfo.fileName());
+               qDebug(logger_monitor::logDebug()) << "Открыт файл: " + fileInfo.fileName();
            }
        } else if (extension == "xlsx")
        {
@@ -254,6 +255,7 @@ void KCRM::on_actionOpenFile_triggered()
        } else
        {
            ui->plainTextEdit->appendPlainText("Неподдерживаемое расширение файла: " + extension);
+           qDebug(logger_monitor::logDebug()) << "Неподдерживаемое расширение файла: " + extension;
        }
 
 
@@ -286,6 +288,7 @@ void KCRM::on_actionSaveFile_triggered()
                         pwtd->setLableName(fileInfo.fileName());
                     } else {
                         ui->plainTextEdit->appendPlainText("Неудалось сохранить файл.");
+                        qDebug(logger_monitor::logDebug()) << "Неудалось сохранить файл.";
                     }
                 }
             }

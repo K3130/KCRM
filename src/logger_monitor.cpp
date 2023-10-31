@@ -9,7 +9,7 @@ namespace logger_monitor
 
     void messageHandler(QtMsgType aType, const QMessageLogContext &aContext, const QString &aMsg)
     {
-        QFile logFile(QDir::toNativeSeparators(QDir::currentPath() + "/DB_log.txt"));
+        QFile logFile(QDir::toNativeSeparators(QDir::currentPath() + "/logger_monitor.txt"));
         //Remove log file if size > 2,5 mb
         if (logFile.size() > 2500000)
         {
