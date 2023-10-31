@@ -30,5 +30,12 @@ Name | Data type | Size	| Note
 Адрес | character varying | 150 | Адрес
 Доп инфо | text | | Доп инфо  
 
-## Таблица "клиенты":  
+## Таблица "поставщики":  
 Name | Data type | Size	| Note  
+---- | ----- | ------ | -------
+Поставщик | character varying | 100 | Краткое имя  
+Название | character varying | 150 | Полное наименование  
+Телефон_1 | character varying | 50 | Номер телефона  
+Телефон_2 | character varying | 50 | Номер телефона  
+Адрес | character varying | 150 | Адрес  
+Доп инфо | text | | Доп инфо  
