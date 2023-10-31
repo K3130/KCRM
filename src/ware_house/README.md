@@ -14,7 +14,7 @@ Name | Data type | Size	| Note
 Цвет_3 | character varying | 20 | Цвет 3  
 Цена | money | 8 | Цена товара  
 Поставщик | character varying | 100 | Поставщик  
-Клиент | character varying | 100 | Клиент  
+Клиент | character varying | 100 | Клиент имя  
 Дата изг. | date | 4 | Дата изготовления  
 Годен до | date | 4 | Срок годности до  
 Сертификат | bool | 1 | Наличие сертификата  
@@ -23,3 +23,12 @@ Name | Data type | Size	| Note
 ## Таблица "клиенты":  
 Name | Data type | Size	| Note  
 ---- | ----- | ------ | -------
+Клиент | character varying | 100 | Клиент имя  
+Название | character varying | 150 | Полное наименование  
+Контакт_1 | character varying | 100 | Лицо из фирмы должность  
+Контакт_2 | character varying | 100 | Лицо из фирмыдолжность  
+Адрес | character varying | 150 | Адрес
+Доп инфо | text | | Доп инфо  
+
+## Таблица "поставщики":  
+Name | Data type | Size	| Note
