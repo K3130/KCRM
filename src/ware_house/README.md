@@ -2,7 +2,8 @@
 ### СКЛАД анализ и структура, в разработке: 
 
 Таблица "товары":  
-Name | Data type | Size	| Note    
+Name | Data type | Size	| Note  
+---- | ----- | ------ | -------
 Товар	 character varying	 250	 Наименование  
 Код тов. character varying	 150	 Код товара  
 Артикул	 character varying	 150	 Артикул товара  
