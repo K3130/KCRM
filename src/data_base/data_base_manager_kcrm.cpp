@@ -96,6 +96,12 @@ bool data_base_manager_kcrm::user_verify(const QString& aLogin, const QString& a
     return true;
 }
 
+QString data_base_manager_kcrm::get_user_role(const QString& aLogin)
+{
+    QString query = QString("SELECT role FROM users WHERE login = '%1'").arg(aLogin);
+    return m_db.randomQueryGetValue(m_qsdb, query).toString();
+}
+
 
 
 

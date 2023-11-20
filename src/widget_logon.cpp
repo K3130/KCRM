@@ -63,6 +63,7 @@ void widget_logon::on_pushButton_2_clicked()
     }
     else
     {
+        m_kcrm.set_user_role(m_dbmk->get_user_role(ui->lineEdit->text()));
         m_kcrm.show();
         qDebug(logger_monitor::logDebug()) << "Вход выполнен пользователем: " << ui->lineEdit->text();
         this->close();

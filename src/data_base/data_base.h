@@ -97,6 +97,10 @@ public:
      * \brief Произвольный запрос
      */
     bool randomQuery(QSqlDatabase &aDataBase, const QString &aQuery);
+    /*!
+     * \brief Произвольный запрос, получить значение из таблицы
+     */
+    QVariant randomQueryGetValue(QSqlDatabase &aDataBase, const QString &aQuery);
 private:
     QString m_last_error;
 };

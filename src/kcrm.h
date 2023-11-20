@@ -20,7 +20,7 @@
 #include "ui_widget_table_document.h"
 #include "./ui_kcrm.h"
 #include "widget_telegram/widget_telegram.h"
-#include "data_base/data_base.h"
+#include "data_base/data_base_manager_kcrm.h"
 #include "logger_monitor.h"
 
 //xls
@@ -122,6 +122,7 @@ private:
     Ui::widget_create_file m_wcf;
     bool m_if_one_new_file_widget = false;
     bool m_if_telegram_open = false;
+    data_base_manager_kcrm *m_dbmk;
 
 };
 #endif // KCRM_H

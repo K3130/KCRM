@@ -129,3 +129,23 @@ bool data_base::randomQuery(QSqlDatabase &aDataBase, const QString &aQuery)
     qDebug() << "Random query successfully.";
     return true;
 }
+
+QVariant data_base::randomQueryGetValue(QSqlDatabase &aDataBase, const QString &aQuery)
+{
+    QVariant answer;
+    QSqlQuery query(aDataBase);
+
+    if (!query.prepare(aQuery) || !query.exec())
+    {
+        qDebug() <<  query.lastError().text() << '\n' << query.lastQuery();
+    }
+    else if (!query.first())
+    {
+        qDebug() << "Empty value!";
+    }
+    else
+    {
+        answer = query.value(0);
+    }
+    return answer;
+}

@@ -26,6 +26,7 @@ public:
     void set_port_num(const QString& aPort);
     bool check_users();
     bool authorization();
+
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
