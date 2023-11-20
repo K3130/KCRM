@@ -46,6 +46,13 @@ enum class window_type
    OTHER
 };
 
+enum class user_type
+{
+    ADMIN_USER,
+    MANAGER_USER,
+    OTHER_USER
+};
+
 struct window_content
 {
     qint32 id;
