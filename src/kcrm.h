@@ -46,7 +46,7 @@ enum class window_type
    OTHER
 };
 
-enum class user_type
+enum class user_role
 {
     ADMIN_USER,
     MANAGER_USER,
@@ -74,6 +74,7 @@ class KCRM : public QMainWindow
 public:
     KCRM(QWidget *parent = nullptr);
     ~KCRM();
+    void set_user_role(const QString& aRole);
 
 private:
 
@@ -116,6 +117,7 @@ protected:
 
 private:
     Ui::KCRM *ui;
+    user_role m_role;
     QVector<window_content> m_widgets;
     Ui::widget_create_file m_wcf;
     bool m_if_one_new_file_widget = false;

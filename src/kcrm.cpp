@@ -18,6 +18,23 @@ KCRM::~KCRM()
     delete ui;
 }
 
+void KCRM::set_user_role(const QString &aRole)
+{
+    // Разрешено все что не запрещено.
+    if (aRole == "admin") {
+        m_role = user_role::ADMIN_USER;
+    }
+    else if (aRole == "manager") {
+        m_role = user_role::MANAGER_USER;
+        // Ограничения менеджеров
+    }
+    else
+    {
+        m_role = user_role::OTHER_USER;
+        // Ограничение всех пользователей
+    }
+}
+
 void KCRM::create_text_document()
 {
     QWidget* text_document = new widget_text_document(this);
