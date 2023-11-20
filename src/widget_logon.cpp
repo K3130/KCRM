@@ -26,7 +26,7 @@ widget_logon::widget_logon(data_base_manager_kcrm *aDbManager, QWidget *parent) 
     ui->lineEdit_3->setReadOnly(true);
 
     qInstallMessageHandler(logger_monitor::messageHandler);
-    qDebug(logger_monitor::logDebug()) << "Run app. ";
+    qDebug(logger_monitor::logDebug()) << "Запуск. ";
 }
 
 widget_logon::~widget_logon()

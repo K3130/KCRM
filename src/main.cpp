@@ -15,16 +15,21 @@ int main(int argc, char *argv[])
     if(!logon.authorization())
     {
         QMessageBox::warning(nullptr, "Ошибка", "Нет связи с БД.", QMessageBox::Ok);
-        qDebug() << "Ошибка. Нет связи с БД.";
+        qDebug(logger_monitor::logDebug()) << "Ошибка. Нет связи с БД.";
     }
     else
     {
+        qDebug(logger_monitor::logDebug()) << "Связь с БД установленна. ";
         logon.set_network_name(db.get_host_string());
         logon.set_port_num(db.get_port_string());
 
         if(!logon.check_users())
         {
-            qDebug() << "Users not found, generate.";
+            qDebug(logger_monitor::logDebug()) << "Пользователь по умолчанию не найден, будет создан по умолчанию.";
+        }
+        else
+        {
+            qDebug(logger_monitor::logDebug()) << "Пользователь по умолчанию найден.";
         }
     }
 
