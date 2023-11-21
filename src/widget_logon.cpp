@@ -22,6 +22,11 @@ widget_logon::widget_logon(data_base_manager_kcrm *aDbManager, QWidget *parent) 
     ui->lineEdit_2->setPlaceholderText(QString("Password"));
     ui->lineEdit_2->setEchoMode(QLineEdit::Password);
 
+    //УДАЛИТЬ!!! ВРЕМЕННО ДЛЯ ОТЛАДКИ
+    ui->lineEdit->setText("Admin");
+    ui->lineEdit_2->setText("kcrm");
+    //-------------------------------
+
     ui->lineEdit_4->setReadOnly(true);
     ui->lineEdit_3->setReadOnly(true);
 
@@ -64,6 +69,7 @@ void widget_logon::on_pushButton_2_clicked()
     else
     {
         m_kcrm.set_user_role(m_dbmk->get_user_role(ui->lineEdit->text()));
+        m_kcrm.set_data_base_manager(m_dbmk);
         m_kcrm.show();
         qDebug(logger_monitor::logDebug()) << "Вход выполнен пользователем: " << ui->lineEdit->text();
         this->close();

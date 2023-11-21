@@ -47,6 +47,8 @@ set(PROJECT_SOURCES
         src/logger_monitor.h
         src/logger_monitor.cpp
         resource.qrc
+        src/other_widgets/widget_users.hpp
+        src/other_widgets/widget_users.ui
 )
 add_executable(KCRM ${PROJECT_SOURCES})
 

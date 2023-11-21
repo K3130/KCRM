@@ -22,6 +22,7 @@
 #include "widget_telegram/widget_telegram.h"
 #include "data_base/data_base_manager_kcrm.h"
 #include "logger_monitor.h"
+#include "other_widgets/widget_users.hpp"
 
 //xls
 #include "xlsxdocument.h"
@@ -75,6 +76,7 @@ public:
     KCRM(QWidget *parent = nullptr);
     ~KCRM();
     void set_user_role(const QString& aRole);
+    void set_data_base_manager(data_base_manager_kcrm *aDbmk);
 
 private:
 
@@ -109,6 +111,8 @@ private slots:
 
     void on_action_3_triggered();
 
+    void on_action_5_triggered();
+
 signals:
     void windowResized();
 
@@ -122,7 +126,7 @@ private:
     Ui::widget_create_file m_wcf;
     bool m_if_one_new_file_widget = false;
     bool m_if_telegram_open = false;
-    data_base_manager_kcrm *m_dbmk;
+    data_base_manager_kcrm *m_dbmk = nullptr;
 
 };
 #endif // KCRM_H

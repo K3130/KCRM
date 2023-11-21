@@ -101,6 +101,10 @@ public:
      * \brief Произвольный запрос, получить значение из таблицы
      */
     QVariant randomQueryGetValue(QSqlDatabase &aDataBase, const QString &aQuery);
+    /*!
+     * \brief Получить все значения из одного столбца
+     */
+    QVector<QVariant> getAllValuesOfOneColumn(QSqlDatabase &aDataBase, const QString &aNameTable, const QString &aNameColumn);
 private:
     QString m_last_error;
 };

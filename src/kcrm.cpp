@@ -35,6 +35,11 @@ void KCRM::set_user_role(const QString &aRole)
     }
 }
 
+void KCRM::set_data_base_manager(data_base_manager_kcrm *aDbmk)
+{
+    m_dbmk = aDbmk;
+}
+
 void KCRM::create_text_document()
 {
     QWidget* text_document = new widget_text_document(this);
@@ -446,51 +451,32 @@ void KCRM::on_actiontelegram_triggered()
 
 }
 
+void KCRM::on_action_5_triggered()
+{
+    QWidget* users_table = new widget_users(m_dbmk, this);
+    QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(users_table, Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
+    qint32 id = QRandomGenerator::global()->bounded(0, 853323747);
+    QPushButton* button = new QPushButton();
+    m_widgets.push_back(window_content(id ,window_type::OTHER, sub_window, button));
+    sub_window->setAttribute(Qt::WA_DeleteOnClose);
+    int x = (ui->mdiArea->rect().width() - 500) / 2;
+    int y = (ui->mdiArea->rect().height() - 400) / 2;
+    sub_window->move(x,y);
+    sub_window->show();
 
+    connect(dynamic_cast<widget_users*>(users_table),
+            &widget_users::signal_window_minimized,
+            this,
+            [=](){
+                button->setText(dynamic_cast<widget_users*>(users_table)->getLableName());
+                window_minimized(id);
+            });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    connect(dynamic_cast<widget_users*>(users_table),
+            &widget_users::signal_window_close,
+            this,
+            [=](){
+                window_close(id);
+            });
+}
 

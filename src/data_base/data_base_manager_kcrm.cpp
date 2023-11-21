@@ -66,13 +66,19 @@ bool data_base_manager_kcrm::check_user_tables()
         c3.m_columnName = "Role";
         columns.push_back(c3);
 
+        ColumnSettings c4;
+        c4.m_type = TYPE_FIELD::TEXT;
+        c4.m_attr = ATTRIBUTES_CONSTRAINTS::NOT_NULL;
+        c4.m_columnName = "Position";
+        columns.push_back(c4);
+
         if(!m_db.createTable(m_qsdb, "users", columns))
         {
             qDebug() << "table not create";
         }
 
-        QVector<QString> col{"Login", "Password", "Role"};
-        QVector<QVariant> row{"Admin", "kcrm", "admin"};
+        QVector<QString> col{"Login", "Password", "Role", "Position"};
+        QVector<QVariant> row{"Admin", "kcrm", "admin", "Administrator"};
         if(!m_db.InsertRow(m_qsdb, "users", col, row))
         {
             qDebug() << "user no create";
@@ -100,6 +106,36 @@ QString data_base_manager_kcrm::get_user_role(const QString& aLogin)
 {
     QString query = QString("SELECT role FROM users WHERE login = '%1'").arg(aLogin);
     return m_db.randomQueryGetValue(m_qsdb, query).toString();
+}
+
+QVector<QString> data_base_manager_kcrm::get_all_users_name()
+{
+    QVector<QString> names;
+    QVector<QVariant> v = m_db.getAllValuesOfOneColumn(m_qsdb, "users", "login");
+    for (size_t i = 0; i < v.size(); i++) {
+        names.push_back(v[i].toString());
+    }
+    return names;
+}
+
+QVector<QString> data_base_manager_kcrm::get_all_users_role()
+{
+    QVector<QString> roles;
+    QVector<QVariant> v = m_db.getAllValuesOfOneColumn(m_qsdb, "users", "role");
+    for (size_t i = 0; i < v.size(); i++) {
+        roles.push_back(v[i].toString());
+    }
+    return roles;
+}
+
+QVector<QString> data_base_manager_kcrm::get_all_users_position()
+{
+    QVector<QString> pos;
+    QVector<QVariant> v = m_db.getAllValuesOfOneColumn(m_qsdb, "users", "position");
+    for (size_t i = 0; i < v.size(); i++) {
+        pos.push_back(v[i].toString());
+    }
+    return pos;
 }
 
 

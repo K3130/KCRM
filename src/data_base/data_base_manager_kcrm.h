@@ -37,10 +37,15 @@ public:
      * \brief user_verify
      * \return результат проверки
      */
-    bool user_verify(const QString& aLogin, const QString& aPass);
-    QString get_user_role(const QString& aLogin);
+    bool user_verify(const QString& aLogin, const QString& aPass);    
     QString get_host_string() {return m_host;}
     QString get_port_string() {return m_port;}
+
+public:
+    QString get_user_role(const QString& aLogin);
+    QVector<QString> get_all_users_name();
+    QVector<QString> get_all_users_role();
+    QVector<QString> get_all_users_position();
 private:
     data_base m_db;
     QSqlDatabase m_qsdb;

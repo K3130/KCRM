@@ -153,8 +153,15 @@ color : black
      <string>Help</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuAdministration">
+    <property name="title">
+     <string>Administration</string>
+    </property>
+    <addaction name="action_5"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
+   <addaction name="menuAdministration"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -316,6 +323,11 @@ color : black
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="text">
+    <string>Пользователи</string>
    </property>
   </action>
  </widget>

@@ -149,3 +149,24 @@ QVariant data_base::randomQueryGetValue(QSqlDatabase &aDataBase, const QString &
     }
     return answer;
 }
+
+QVector<QVariant> data_base::getAllValuesOfOneColumn(QSqlDatabase &aDataBase,
+                                                     const QString &aNameTable,
+                                                     const QString &aNameColumn)
+{
+    QVector<QVariant> answer;
+    QSqlQuery query(aDataBase);
+    QString q = QString("SELECT %1 FROM %2")
+                    .arg(aNameColumn)
+                    .arg(aNameTable);
+    if (!query.exec(q))
+    {
+        qDebug() <<  query.lastError().text() << '\n' << query.lastQuery();
+
+    }
+
+    while (query.next()) {
+        answer.push_back(query.value(0));
+    }
+    return answer;
+}
