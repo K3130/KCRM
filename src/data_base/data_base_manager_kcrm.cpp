@@ -138,6 +138,26 @@ QVector<QString> data_base_manager_kcrm::get_all_users_position()
     return pos;
 }
 
+bool data_base_manager_kcrm::add_new_user(const QString &aLogin, const QString &aPass, const QString &aRole, const QString &aPosition)
+{
+    QVector<QString> col{"Login", "Password", "Role", "Position"};
+    QVector<QVariant> row{aLogin, aPass, aRole, aPosition};
+
+    if(!m_db.InsertRow(m_qsdb, "users", col, row))
+    {
+        qWarning() << m_db.getLastError();
+        return false;
+    }
+    return true;
+}
+
+void data_base_manager_kcrm::delete_user(const QString &aLogin)
+{
+    QString query = QString("DELETE FROM users WHERE login = '%1'")
+                        .arg(aLogin);
+    m_db.randomQuery(m_qsdb, query);
+}
+
 
 
 

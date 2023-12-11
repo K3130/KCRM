@@ -152,28 +152,32 @@
      <item>
       <widget class="QPushButton" name="pushButton_4">
        <property name="text">
-        <string>PushButton</string>
+        <string>add</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_5">
        <property name="text">
-        <string>PushButton</string>
+        <string>del</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_6">
        <property name="text">
-        <string>PushButton</string>
+        <string>update</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QTableWidget" name="tableWidget"/>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QTableWidget" name="tableWidget"/>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

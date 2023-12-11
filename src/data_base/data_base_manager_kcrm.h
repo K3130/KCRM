@@ -37,7 +37,10 @@ public:
      * \brief user_verify
      * \return результат проверки
      */
-    bool user_verify(const QString& aLogin, const QString& aPass);    
+    bool user_verify(const QString &aLogin, const QString &aPass);
+    bool add_new_user(const QString &aLogin, const QString &aPass,
+                      const QString &aRole, const QString &aPosition);
+    void delete_user(const QString &aLogin);
     QString get_host_string() {return m_host;}
     QString get_port_string() {return m_port;}
 
