@@ -11,11 +11,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-#set(CMAKE_PREFIX_PATH "C:/msys64/mingw64/lib/cmake/Qt6")
-
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Core REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Sql REQUIRED)
-
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets Sql PrintSupport)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql PrintSupport)
 
 set(PROJECT_SOURCES
         src/main.cpp
@@ -53,24 +50,21 @@ set(PROJECT_SOURCES
 add_executable(KCRM ${PROJECT_SOURCES})
 
 if (WIN32)
-    message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~OS Windows~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OS Windows ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 else()
-    message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~OS Linux~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OS Linux ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 endif (WIN32)
-message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~You Qt version ->> " ${QT_VERSION_MAJOR} ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~)
-message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Cmake version ->> " ${CMAKE_VERSION} ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~)
+message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ You Qt version " ${QT_VERSION_MAJOR}.${QT_VERSION_MINOR} " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Cmake version " ${CMAKE_VERSION} " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 #Для работы с excel документами
-#set(CPACK_PACKAGE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/third-party/QXlsx")
 add_subdirectory(third-party/QXlsx/)
 target_link_libraries(${PROJECT_NAME} PRIVATE QXlsx::QXlsx)
-#Принтер...
-find_package(Qt5 COMPONENTS PrintSupport REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::PrintSupport)
 
-target_link_libraries(KCRM PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Sql)
-
-
+target_link_libraries(KCRM PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Sql
+    Qt${QT_VERSION_MAJOR}::PrintSupport)
 
 set_target_properties(KCRM PROPERTIES
     WIN32_EXECUTABLE TRUE
