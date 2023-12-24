@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.28)
 
 project(KCRM VERSION 0.1 LANGUAGES CXX)
 
@@ -51,6 +51,9 @@ add_executable(KCRM ${PROJECT_SOURCES})
 
 if (WIN32)
     message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OS Windows ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/third-party/QPSQL/libiconv-2.dll $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/third-party/QPSQL/libintl-9.dll $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/third-party/QPSQL/libpq.dll $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 else()
     message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OS Linux ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 endif (WIN32)
