@@ -47,7 +47,8 @@ set(PROJECT_SOURCES
         src/other_widgets/widget_users.hpp
         src/other_widgets/widget_users.ui
 )
-add_executable(KCRM ${PROJECT_SOURCES})
+add_executable(KCRM ${PROJECT_SOURCES}
+    scripts/AI_test.py)
 
 if (WIN32)
     message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OS Windows ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -89,5 +90,9 @@ add_custom_command(
    ${CMAKE_CURRENT_SOURCE_DIR}/network_settings.json
    $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 
-
+add_custom_command(
+  TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+   ${CMAKE_CURRENT_SOURCE_DIR}/scripts/
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>/scripts)
 
