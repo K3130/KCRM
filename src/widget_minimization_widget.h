@@ -12,6 +12,9 @@
 
 /*
  * Виджет прдставления сворачивания окна.
+ * Представляется в предсталении сворачивания окна в низ.
+ * При нажатии на кнопку разварачивает окно или делает его активным.
+ *
 */
 
 namespace Ui {
@@ -31,7 +34,8 @@ public:
     void handleButtonClick(QWidget* aWidget);
 
 private:
-    Ui::widget_minimization_widget *ui;    
+    Ui::widget_minimization_widget *ui;
+    QPushButton* m_button = nullptr;
 
 protected:
   void paintEvent(QPaintEvent *pe);

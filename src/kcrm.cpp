@@ -480,3 +480,44 @@ void KCRM::on_action_5_triggered()
             });
 }
 
+
+void KCRM::on_actionai_triggered()
+{
+    QWidget* ai_control = new widget_ai(this);
+    QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(ai_control, Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
+    qint32 id = QRandomGenerator::global()->bounded(0, 853323747);
+    QPushButton* button = new QPushButton();
+    m_widgets.push_back(window_content(id ,window_type::OTHER, sub_window, button));
+    sub_window->setAttribute(Qt::WA_DeleteOnClose);
+    //Сразу на всю область
+    QSize mdiAreaSize = ui->mdiArea->size();
+    int width = mdiAreaSize.width();
+    int height = mdiAreaSize.height();
+    sub_window->resize(width, height);
+    sub_window->show();
+
+    connect(dynamic_cast<widget_ai*>(ai_control),
+            &widget_ai::signal_window_minimized,
+            this,
+            [=](){
+                button->setText(dynamic_cast<widget_ai*>(ai_control)->getLableName());
+                window_minimized(id);
+            });
+
+    connect(dynamic_cast<widget_ai*>(ai_control),
+            &widget_ai::signal_window_close,
+            this,
+            [=](){
+                window_close(id);
+            });
+    //Обновляем размеры при изменении размеров главного окна
+    connect(this, &KCRM::windowResized,
+            this,
+            [=](){
+                QSize mdiAreaSize = ui->mdiArea->size();
+                int width = mdiAreaSize.width();
+                int height = mdiAreaSize.height();
+                sub_window->resize(width, height);
+            });
+}
+

@@ -208,6 +208,7 @@ color : black
    </attribute>
    <addaction name="actiontelegram"/>
    <addaction name="actionbots"/>
+   <addaction name="actionai"/>
   </widget>
   <widget class="QToolBar" name="toolBar_3">
    <property name="windowTitle">
@@ -328,6 +329,18 @@ color : black
   <action name="action_5">
    <property name="text">
     <string>Пользователи</string>
+   </property>
+  </action>
+  <action name="actionai">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/res/res/ai.png</normaloff>:/res/res/ai.png</iconset>
+   </property>
+   <property name="text">
+    <string>ai</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
  </widget>

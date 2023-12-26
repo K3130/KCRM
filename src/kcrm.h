@@ -23,6 +23,7 @@
 #include "data_base/data_base_manager_kcrm.h"
 #include "logger_monitor.h"
 #include "other_widgets/widget_users.hpp"
+#include "other_widgets/widget_ai.hpp"
 
 //xls
 #include "xlsxdocument.h"
@@ -112,6 +113,8 @@ private slots:
     void on_action_3_triggered();
 
     void on_action_5_triggered();
+
+    void on_actionai_triggered();
 
 signals:
     void windowResized();

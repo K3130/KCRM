@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.20)
 
 project(KCRM VERSION 0.1 LANGUAGES CXX)
 
@@ -46,9 +46,12 @@ set(PROJECT_SOURCES
         resource.qrc
         src/other_widgets/widget_users.hpp
         src/other_widgets/widget_users.ui
+        src/other_widgets/widget_ai.hpp
+        src/other_widgets/widget_ai.ui
 )
 add_executable(KCRM ${PROJECT_SOURCES}
-    scripts/AI_test.py)
+    scripts/AI_test.py
+)
 
 if (WIN32)
     message("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OS Windows ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")

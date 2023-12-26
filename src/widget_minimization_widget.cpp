@@ -26,6 +26,7 @@ widget_minimization_widget::~widget_minimization_widget()
 
 void widget_minimization_widget::createButton(QPushButton* aButton, QWidget* aWidget)
 {
+    m_button = aButton;
     if (aButton != nullptr && aWidget != nullptr)
     {
         for (int i = 0; i < ui->horizontalLayout->count(); ++i)
@@ -59,9 +60,17 @@ void widget_minimization_widget::handleButtonClick(QWidget* aWidget)
 {
     if (aWidget != nullptr)
     {
-        QSize size = aWidget->minimumSizeHint();
-        aWidget->resize(size);
-        aWidget->showNormal();
+        if (aWidget->isMinimized())
+        {
+            QSize size = aWidget->minimumSizeHint();
+            aWidget->resize(size);
+            aWidget->showNormal();
+        }
+        else if (aWidget->isActiveWindow())
+        {
+            aWidget->showMinimized();
+        }
+
     }
 
 }

@@ -9,5 +9,6 @@
 		<file>res/telegram.png</file>
 		<file>res/warehouse.png</file>
 		<file>res/ship.png</file>
+		<file>res/ai.png</file>
     </qresource>
 </RCC>
