@@ -5,9 +5,6 @@ KCRM::KCRM(QWidget *parent)
     , ui(new Ui::KCRM)
 {
     ui->setupUi(this);
-    ui->plainTextEdit->setMaximumHeight(100);
-    ui->plainTextEdit->setMinimumHeight(100);
-    ui->label->setMaximumHeight(12);
     ui->mdiArea->viewport()->setMouseTracking(true);
 
     qInstallMessageHandler(logger_monitor::messageHandler);
@@ -109,6 +106,23 @@ void KCRM::window_minimized(qint32 id)
         }
     }
 
+}
+
+void KCRM::window_resize(qint32 id)
+{
+    for (size_t i = 0; i < m_widgets.size(); i++)
+    {
+        if(m_widgets[i].id == id)
+        {
+            if (!m_widgets[i].pWidget->isMinimized())
+            {
+                QSize mdiAreaSize = ui->mdiArea->size();
+                int width = mdiAreaSize.width();
+                int height = mdiAreaSize.height();
+                m_widgets[i].pWidget->resize(width, height);
+            }
+        }
+    }
 }
 
 void KCRM::window_close(qint32 id)
@@ -514,10 +528,7 @@ void KCRM::on_actionai_triggered()
     connect(this, &KCRM::windowResized,
             this,
             [=](){
-                QSize mdiAreaSize = ui->mdiArea->size();
-                int width = mdiAreaSize.width();
-                int height = mdiAreaSize.height();
-                sub_window->resize(width, height);
+                window_resize(id);
             });
 }
 

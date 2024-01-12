@@ -85,6 +85,8 @@ private:
 
     void window_close(qint32 id);
 
+    void window_resize(qint32 id);
+
 public slots:
 
     void create_text_document();

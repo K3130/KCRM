@@ -64,7 +64,7 @@ void widget_minimization_widget::handleButtonClick(QWidget* aWidget)
         {
             QSize size = aWidget->minimumSizeHint();
             aWidget->resize(size);
-            aWidget->showNormal();
+            aWidget->showMaximized();
         }
         else if (aWidget->isActiveWindow())
         {
