@@ -5,10 +5,13 @@
 #include <QWidget>
 #include <QTextEdit>
 #include <QComboBox>
+#include <QDir>
+#include <QProcess>
 
 /*!
  * Widget для AI скриптов пока для тестов.
  * \author Konstantin Smirnov
+ *
  */
 
 namespace Ui {
@@ -18,9 +21,9 @@ class widget_ai;
  * \brief Рисую свой виджет...
  *
  */
-class MyWidget : public QWidget {
+class ChatWidget : public QWidget {
 public:
-    MyWidget(QWidget *parent = nullptr) : QWidget(parent)
+    ChatWidget(QWidget *parent = nullptr) : QWidget(parent)
     {
         setStyleSheet("background-color: #AAD4F5;");
         m_button1 = new QPushButton("Чат", this);
@@ -44,6 +47,9 @@ public:
         m_comboBox1 = new QComboBox(this);
         m_comboBox1->setStyleSheet("QComboBox {border-radius: 0px; background-color: #D4DDE9;}");
         m_comboBox1->setPlaceholderText("Выбор скрипта:");
+        QDir directory("scripts");
+        directory.setNameFilters(QStringList({"AI*"}));
+        m_comboBox1->addItems(directory.entryList());
         m_comboBox1->hide();
 
         // Button 1
@@ -87,6 +93,19 @@ public:
         m_button4->setStyleSheet(buttonStyle);
         m_button4->hide();
         connect(m_button4, &QPushButton::clicked, this, [&]() {
+            if(m_textEdit1->toPlainText() == "")
+            {
+                m_textEdit2->append("Введите сообщение.\n");
+            }
+            else if(m_comboBox1->currentIndex() == -1)
+            {
+                m_textEdit2->append("Нужно выбрать скрипт.\n");
+            }
+            else
+            {
+                sendMessage(m_textEdit1->toPlainText());
+                m_textEdit1->clear();
+            }
 
 
         });
@@ -169,6 +188,46 @@ private:
 
         // --
     }
+    /*!
+     * \brief sendMessage
+     * \param aMessage
+     * Отправляет сообщение
+     */
+    void sendMessage(const QString& aMessage)
+    {
+        QProcess process;
+        process.start("python", QStringList({"scripts/" + m_comboBox1->currentText(), aMessage}));
+        if(process.waitForStarted())
+        {
+            if (process.state() == QProcess::Running)
+            {
+                while (process.state() == QProcess::Running)
+                {
+                    char c;
+                    qint64 bytesRead = process.read(&c, 1);
+                    if (bytesRead > 0)
+                    {
+                        m_textEdit2->insertPlainText(QChar(c));
+
+                    }
+                    else if (bytesRead == -1)
+                    {
+                        qDebug() << "Error reading from stdout";
+                        break;
+                    }
+                    else if (process.waitForReadyRead())
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
 private:
     QPushButton *m_button1;
     QPushButton *m_button2;
@@ -191,7 +250,7 @@ public:
     {
         ui->setupUi(this);
 
-        MyWidget *w = new MyWidget(this);
+        ChatWidget *w = new ChatWidget(this);
         ui->verticalLayout->addWidget(w);
 
 

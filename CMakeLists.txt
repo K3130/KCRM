@@ -50,7 +50,7 @@ set(PROJECT_SOURCES
         src/other_widgets/widget_ai.ui
 )
 add_executable(KCRM ${PROJECT_SOURCES}
-    scripts/AI_test.py
+    scripts/AI_CHAT_test.py
 )
 
 if (WIN32)
