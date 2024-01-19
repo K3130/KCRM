@@ -1,3 +1,3 @@
 [Введение](./getting-started.md)   
-[БД Склад](../src/ware_house/README.md)   
+[Склад, его система и структура БД](../src/ware_house/README.md)   
 
