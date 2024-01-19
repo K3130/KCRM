@@ -532,3 +532,34 @@ void KCRM::on_actionai_triggered()
             });
 }
 
+
+void KCRM::on_actionwarehouse_triggered()
+{
+    QWidget* wh_widget = new widget_wh(m_dbmk, this);
+    QMdiSubWindow* sub_window = ui->mdiArea->addSubWindow(wh_widget, Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
+    qint32 id = QRandomGenerator::global()->bounded(0, 853323747);
+    QPushButton* button = new QPushButton();
+    m_widgets.push_back(window_content(id ,window_type::OTHER, sub_window, button));
+    sub_window->setAttribute(Qt::WA_DeleteOnClose);
+    int x = (ui->mdiArea->rect().width() - 500) / 2;
+    int y = (ui->mdiArea->rect().height() - 400) / 2;
+    sub_window->move(x,y);
+    sub_window->show();
+
+    connect(dynamic_cast<widget_wh*>(wh_widget),
+            &widget_wh::signal_window_minimized,
+            this,
+            [=](){
+                button->setText(dynamic_cast<widget_wh*>(wh_widget)->getLableName());
+                window_minimized(id);
+            });
+
+    connect(dynamic_cast<widget_wh*>(wh_widget),
+            &widget_wh::signal_window_close,
+            this,
+            [=](){
+                window_close(id);
+            });
+
+}
+

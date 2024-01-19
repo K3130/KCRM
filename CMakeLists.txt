@@ -48,6 +48,8 @@ set(PROJECT_SOURCES
         src/other_widgets/widget_users.ui
         src/other_widgets/widget_ai.hpp
         src/other_widgets/widget_ai.ui
+        src/ware_house/widgets/widget_wh.hpp
+        src/ware_house/widgets/widget_wh.ui
 )
 add_executable(KCRM ${PROJECT_SOURCES}
     scripts/AI_CHAT_test.py

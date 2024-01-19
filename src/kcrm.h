@@ -24,6 +24,7 @@
 #include "logger_monitor.h"
 #include "other_widgets/widget_users.hpp"
 #include "other_widgets/widget_ai.hpp"
+#include "ware_house/widgets/widget_wh.hpp"
 
 //xls
 #include "xlsxdocument.h"
@@ -117,6 +118,8 @@ private slots:
     void on_action_5_triggered();
 
     void on_actionai_triggered();
+
+    void on_actionwarehouse_triggered();
 
 signals:
     void windowResized();
